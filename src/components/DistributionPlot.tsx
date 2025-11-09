@@ -30,11 +30,9 @@ export const DistributionPlot: React.FC<DistributionPlotProps> = ({
   showH1 = true,
   scenarioId,
 }) => {
-  const data = useMemo(() => {
-    const { testType } = state;
-    const { rejectionRegion, ncp } = derived;
-
-    const df = testType === 't-test' ? state.n - 1 : undefined;
+  // Calculate the axis range separately so we can use it for both data generation and domain
+  const axisRange = useMemo(() => {
+    const { ncp } = derived;
 
     // Determine x-axis range - dynamic to show all relevant content
     let xMin: number;
@@ -48,20 +46,28 @@ export const DistributionPlot: React.FC<DistributionPlotProps> = ({
     }
 
     // Extend to show both H0 and H1 distributions plus margins
-    // H1 distribution is centered at ncp, so we need to show at least ncp + 3 standard deviations
     const h1Center = ncp || 0;
-    const minXMax = 10; // Minimum extent as requested
-    let dynamicXMax = Math.max(minXMax, h1Center + 4, Math.abs(xMin)); // Extend to show H1 + margin
+    const minXMax = 10;
+    let dynamicXMax = Math.max(minXMax, h1Center + 4, Math.abs(xMin));
 
     // IMPORTANT: Extend range to include the observed test statistic if it exists
     if (sampleData) {
       const testStat = sampleData.testStatistic;
-      // Add margin around the test statistic so it's clearly visible
       xMin = Math.min(xMin, testStat - 1);
       dynamicXMax = Math.max(dynamicXMax, testStat + 1);
     }
 
     xMax = dynamicXMax;
+
+    return { xMin, xMax };
+  }, [derived, scenarioId, sampleData]);
+
+  const data = useMemo(() => {
+    const { testType } = state;
+    const { rejectionRegion, ncp } = derived;
+    const { xMin, xMax } = axisRange;
+
+    const df = testType === 't-test' ? state.n - 1 : undefined;
 
     const step = (xMax - xMin) / DISTRIBUTION_POINTS;
 
@@ -97,7 +103,7 @@ export const DistributionPlot: React.FC<DistributionPlotProps> = ({
     }
 
     return points;
-  }, [state, derived, scenarioId, sampleData]);
+  }, [state, derived, axisRange]);
 
   const { criticalValues } = derived;
 
@@ -116,6 +122,8 @@ export const DistributionPlot: React.FC<DistributionPlotProps> = ({
           <CartesianGrid strokeDasharray="3 3" stroke="#e5e7eb" />
           <XAxis
             dataKey="x"
+            domain={[axisRange.xMin, axisRange.xMax]}
+            type="number"
             label={{ value: 'Test Statistic', position: 'insideBottom', offset: -10 }}
             stroke="#6b7280"
           />
