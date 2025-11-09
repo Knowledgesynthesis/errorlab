@@ -35,8 +35,8 @@ export const DistributionPlot: React.FC<DistributionPlotProps> = ({
     const se = getStandardError(sigma, n);
     const df = testType === 't-test' ? n - 1 : undefined;
 
-    // Determine x-axis range - more compact to reduce wasted space
-    const maxRange = Math.max(3.5, Math.abs(delta / se) + 2.5);
+    // Determine x-axis range - compact to minimize wasted space
+    const maxRange = Math.max(3.0, Math.abs(delta / se) + 2);
     const xMin = -maxRange;
     const xMax = maxRange;
     const step = (xMax - xMin) / DISTRIBUTION_POINTS;
@@ -96,6 +96,7 @@ export const DistributionPlot: React.FC<DistributionPlotProps> = ({
             stroke="#6b7280"
           />
           <YAxis
+            width={40}
             label={{ value: 'Probability Density', angle: -90, position: 'insideLeft' }}
             stroke="#6b7280"
           />
