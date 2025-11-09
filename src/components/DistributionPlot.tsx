@@ -218,6 +218,36 @@ export const DistributionPlot: React.FC<DistributionPlotProps> = ({
         </ResponsiveContainer>
       </div>
 
+      {/* How to Read This Figure */}
+      <div className="mt-2 p-2 bg-blue-50 rounded-md border border-blue-300">
+        <h4 className="text-sm font-bold text-blue-900 mb-1">📖 How to Read This Figure:</h4>
+        <ol className="text-xs text-blue-900 space-y-1 list-decimal list-inside">
+          <li><strong>Gray solid line (H₀):</strong> Shows where test statistics fall when the null hypothesis is true (no effect)</li>
+          <li><strong>Orange dashed line (H₁):</strong> Shows where test statistics fall when there's a real effect of size δ</li>
+          <li><strong>Red shaded area:</strong> The rejection region - if your test statistic lands here, you reject H₀</li>
+          <li><strong>Vertical dashed red lines:</strong> Critical values that mark the boundaries of the rejection region</li>
+          {sampleData && <li><strong>Purple vertical line:</strong> Your observed test statistic from the sample you generated</li>}
+        </ol>
+      </div>
+
+      {/* Key Observations */}
+      <div className="mt-2 p-2 bg-green-50 rounded-md border border-green-300">
+        <h4 className="text-sm font-bold text-green-900 mb-1">👁️ Key Observations:</h4>
+        <ul className="text-xs text-green-900 space-y-1">
+          <li><strong>Type I Error (α = {(state.alpha * 100).toFixed(1)}%):</strong> The shaded area under the H₀ curve. This is the probability of rejecting H₀ when it's actually true.</li>
+          {showH1 && (
+            <>
+              <li><strong>Type II Error (β = {(derived.beta * 100).toFixed(1)}%):</strong> The unshaded area under the H₁ curve (between the critical values). This is the probability of failing to reject H₀ when H₁ is true.</li>
+              <li><strong>Power ({(derived.power * 100).toFixed(1)}%):</strong> The shaded area under the H₁ curve. This is your chance of correctly detecting the effect when it exists.</li>
+              <li><strong>Distance between curves:</strong> Determined by the effect size (δ = {state.delta.toFixed(2)}). Larger effects = more separation = easier to detect.</li>
+            </>
+          )}
+          {sampleData && (
+            <li><strong>Your sample:</strong> The purple line shows where your observed test statistic landed. {sampleData.decision === 'reject' ? 'It fell in the rejection region, so we reject H₀!' : 'It did not fall in the rejection region, so we fail to reject H₀.'}</li>
+          )}
+        </ul>
+      </div>
+
       {/* Legend explanations */}
       <div className="mt-2 grid grid-cols-1 md:grid-cols-2 gap-2 text-sm">
         <div className="flex items-center space-x-2">

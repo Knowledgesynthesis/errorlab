@@ -183,14 +183,38 @@ export const TwoByTwoCard: React.FC<TwoByTwoCardProps> = ({ data, state, scenari
         </div>
       </div>
 
-      {/* Explanation */}
-      <div className="mt-1 p-2 bg-purple-50 rounded-md border border-purple-200">
-        <p className="text-xs text-purple-900 leading-relaxed">
-          <strong>Understanding the table:</strong> Out of {total.toLocaleString()} hypothetical cases,{' '}
-          {((state.prevalence * 100).toFixed(0))}% truly have H₁ (effect exists).
-          With current settings, we correctly detect {data.truePositive.toLocaleString()} of these (power),
-          but miss {data.falseNegative.toLocaleString()} (Type II error).
-        </p>
+      {/* How to Read This Table */}
+      <div className="mt-2 p-2 bg-blue-50 rounded-md border border-blue-300">
+        <h4 className="text-sm font-bold text-blue-900 mb-1">📊 How to Read This Table:</h4>
+        <ol className="text-xs text-blue-900 space-y-1 list-decimal list-inside">
+          <li><strong>Rows (Truth):</strong> What reality actually is - either H₀ is true (no effect) or H₁ is true (effect exists)</li>
+          <li><strong>Columns (Decision):</strong> What we decide based on our test - either fail to reject H₀ or reject H₀</li>
+          <li><strong>Each cell:</strong> Shows how many cases fall into that combination of truth and decision</li>
+          <li><strong>Cell colors:</strong> Gray = correct decisions, Red = Type I error, Blue = Type II error, Green = power</li>
+        </ol>
+      </div>
+
+      {/* What Each Cell Means */}
+      <div className="mt-2 p-2 bg-green-50 rounded-md border border-green-300">
+        <h4 className="text-sm font-bold text-green-900 mb-1">👁️ What Each Cell Means:</h4>
+        <div className="text-xs text-green-900 space-y-1">
+          <p><strong>Top-left (Gray):</strong> Correct decisions when H₀ is true - we correctly fail to reject when there's no effect</p>
+          <p><strong>Top-right (Red):</strong> Type I errors (α = {(state.alpha * 100).toFixed(1)}%) - we incorrectly reject H₀ when it's actually true (false alarm)</p>
+          <p><strong>Bottom-left (Blue):</strong> Type II errors (β) - we fail to detect a real effect when H₁ is true (miss)</p>
+          <p><strong>Bottom-right (Green):</strong> Power (1-β) - we correctly detect the effect when H₁ is true (true positive)</p>
+        </div>
+      </div>
+
+      {/* Key Takeaways */}
+      <div className="mt-2 p-2 bg-purple-50 rounded-md border border-purple-200">
+        <h4 className="text-sm font-bold text-purple-900 mb-1">🎯 Key Takeaways:</h4>
+        <ul className="text-xs text-purple-900 leading-relaxed space-y-1">
+          <li>Out of {total.toLocaleString()} hypothetical cases, {((state.prevalence * 100).toFixed(0))}% truly have H₁ (effect exists)</li>
+          <li>We correctly detect {data.truePositive.toLocaleString()} of these real effects (power = {((data.truePositive / (data.falseNegative + data.truePositive)) * 100).toFixed(1)}%)</li>
+          <li>We miss {data.falseNegative.toLocaleString()} real effects (Type II error)</li>
+          <li>We incorrectly reject H₀ in {data.falsePositive.toLocaleString()} cases where it's actually true (Type I error)</li>
+          <li><strong>Trade-off:</strong> Lower α means fewer false alarms but potentially more missed detections</li>
+        </ul>
       </div>
     </div>
   );
