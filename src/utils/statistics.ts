@@ -252,7 +252,9 @@ export function calculateBetaAndPower(state: ExperimentState): { beta: number; p
   const se = getStandardError(sigma, n);
 
   // Calculate non-centrality parameter
-  const ncp = delta / se;
+  // For one-sided-left, delta represents magnitude but effect is in negative direction
+  const effectDirection = sidedness === 'one-sided-left' ? -1 : 1;
+  const ncp = (effectDirection * delta) / se;
 
   const criticalValues = getCriticalValues(alpha, sidedness, testType, df);
   const cdf = testType === 'z-test' ? normalCDF : (x: number) => tCDF(x, df!);
@@ -261,13 +263,13 @@ export function calculateBetaAndPower(state: ExperimentState): { beta: number; p
 
   switch (sidedness) {
     case 'one-sided-right': {
-      // H1: μ > μ0, so under H1, the distribution is shifted right by ncp
+      // H1: μ > μ0, so under H1, the distribution is shifted right by ncp (positive)
       const criticalUnderH1 = criticalValues[0] - ncp;
       beta = cdf(criticalUnderH1);
       break;
     }
     case 'one-sided-left': {
-      // H1: μ < μ0, so under H1, the distribution is shifted left by ncp
+      // H1: μ < μ0, so under H1, the distribution is shifted left by ncp (negative)
       const criticalUnderH1 = criticalValues[0] - ncp;
       beta = 1 - cdf(criticalUnderH1);
       break;
@@ -305,7 +307,9 @@ export function calculateDerivedValues(state: ExperimentState): DerivedValues {
   };
 
   const se = getStandardError(state.sigma, state.n);
-  const ncp = state.delta / se;
+  // For one-sided-left, delta represents magnitude but effect is in negative direction
+  const effectDirection = sidedness === 'one-sided-left' ? -1 : 1;
+  const ncp = (effectDirection * state.delta) / se;
 
   return {
     criticalValues,
@@ -380,7 +384,9 @@ export function generateSample(state: ExperimentState, underH1: boolean = false)
   const { n, sigma, delta, testType, sidedness, seed } = state;
 
   const rng = new SeededRandom(seed);
-  const trueMean = underH1 ? delta : 0;
+  // For one-sided-left, delta represents magnitude but effect is in negative direction
+  const effectDirection = sidedness === 'one-sided-left' ? -1 : 1;
+  const trueMean = underH1 ? (effectDirection * delta) : 0;
 
   // Generate sample
   const values = Array.from({ length: n }, () => rng.nextGaussian(trueMean, sigma));
