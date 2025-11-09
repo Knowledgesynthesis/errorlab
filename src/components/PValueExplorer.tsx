@@ -28,17 +28,17 @@ export const PValueExplorer: React.FC<PValueExplorerProps> = ({ state, onSeedCha
   const derived = calculateDerivedValues(state);
 
   return (
-    <div className="space-y-4">
+    <div className="space-y-2">
       <div className="bg-white rounded-lg shadow-md p-4">
-        <h3 className="text-xl font-bold text-gray-800 mb-3">p-value Explorer</h3>
+        <h3 className="text-xl font-bold text-gray-800 mb-1">p-value Explorer</h3>
 
-        <div className="mb-4">
-          <p className="text-sm text-gray-700 mb-4">
+        <div className="mb-2">
+          <p className="text-sm text-gray-700 mb-2">
             Generate a random sample and see where the test statistic falls on the H₀ distribution.
             The p-value is the probability (under H₀) of getting a result at least as extreme.
           </p>
 
-          <div className="flex flex-wrap gap-3">
+          <div className="flex flex-wrap gap-2">
             <button
               onClick={() => handleGenerateSample(false)}
               className="px-4 py-2 bg-blue-600 hover:bg-blue-700 text-white rounded-md font-medium transition-colors"
@@ -64,8 +64,8 @@ export const PValueExplorer: React.FC<PValueExplorerProps> = ({ state, onSeedCha
         </div>
 
         {sampleData && (
-          <div className="space-y-4">
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+          <div className="space-y-2">
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-2">
               <div className="p-4 bg-gray-50 rounded-md border border-gray-200">
                 <div className="text-xs text-gray-600 mb-1">Sample Mean</div>
                 <div className="text-2xl font-bold text-gray-800">

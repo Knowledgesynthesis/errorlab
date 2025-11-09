@@ -14,8 +14,8 @@ export const ControlPanel: React.FC<ControlPanelProps> = ({ state, onChange, onR
   };
 
   return (
-    <div className="bg-white rounded-lg shadow-md p-4 space-y-4">
-      <div className="flex justify-between items-center mb-4">
+    <div className="bg-white rounded-lg shadow-md p-4 space-y-2">
+      <div className="flex justify-between items-center mb-2">
         <h2 className="text-2xl font-bold text-gray-800">Controls</h2>
         <button
           onClick={onReset}
@@ -213,7 +213,7 @@ export const ControlPanel: React.FC<ControlPanelProps> = ({ state, onChange, onR
       </div>
 
       {/* Info callouts */}
-      <div className="mt-4 p-3 bg-blue-50 rounded-md border border-blue-200">
+      <div className="mt-2 p-2 bg-blue-50 rounded-md border border-blue-200">
         <p className="text-xs text-blue-800 leading-relaxed">
           <strong>Tip:</strong> Increasing α expands the rejection region → increases power → increases Type I errors.
           Increasing n or δ decreases β and increases power.

@@ -23,10 +23,10 @@ export const TwoByTwoCard: React.FC<TwoByTwoCardProps> = ({ data, state, scenari
 
   return (
     <div className="bg-white rounded-lg shadow-md p-4">
-      <h3 className="text-xl font-bold text-gray-800 mb-3">2×2 Decision Table</h3>
+      <h3 className="text-xl font-bold text-gray-800 mb-1">2×2 Decision Table</h3>
 
       {scenario && (
-        <div className="mb-3 p-3 bg-gray-50 rounded-md text-sm text-gray-700">
+        <div className="mb-1 p-2 bg-gray-50 rounded-md text-sm text-gray-700">
           <p><strong>H₀:</strong> {scenario.h0}</p>
           <p><strong>H₁:</strong> {scenario.h1}</p>
         </div>
@@ -36,19 +36,19 @@ export const TwoByTwoCard: React.FC<TwoByTwoCardProps> = ({ data, state, scenari
         <table className="w-full border-collapse">
           <thead>
             <tr>
-              <th className="border-2 border-gray-300 p-3 bg-gray-100"></th>
-              <th className="border-2 border-gray-300 p-3 bg-gray-100 text-center font-bold" colSpan={2}>
+              <th className="border-2 border-gray-300 p-2 bg-gray-100"></th>
+              <th className="border-2 border-gray-300 p-2 bg-gray-100 text-center font-bold" colSpan={2}>
                 Decision
               </th>
             </tr>
             <tr>
-              <th className="border-2 border-gray-300 p-3 bg-gray-100 text-center font-bold">
+              <th className="border-2 border-gray-300 p-2 bg-gray-100 text-center font-bold">
                 Truth
               </th>
-              <th className="border-2 border-gray-300 p-3 bg-blue-50 text-center text-sm font-semibold">
+              <th className="border-2 border-gray-300 p-2 bg-blue-50 text-center text-sm font-semibold">
                 Fail to Reject H₀
               </th>
-              <th className="border-2 border-gray-300 p-3 bg-red-50 text-center text-sm font-semibold">
+              <th className="border-2 border-gray-300 p-2 bg-red-50 text-center text-sm font-semibold">
                 Reject H₀
               </th>
             </tr>
@@ -56,7 +56,7 @@ export const TwoByTwoCard: React.FC<TwoByTwoCardProps> = ({ data, state, scenari
           <tbody>
             {/* H0 is True row */}
             <tr>
-              <td className="border-2 border-gray-300 p-3 bg-blue-50 text-center font-semibold">
+              <td className="border-2 border-gray-300 p-2 bg-blue-50 text-center font-semibold">
                 H₀ True
               </td>
               {/* True Negative - Correct */}
@@ -103,7 +103,7 @@ export const TwoByTwoCard: React.FC<TwoByTwoCardProps> = ({ data, state, scenari
             </tr>
             {/* H1 is True row */}
             <tr>
-              <td className="border-2 border-gray-300 p-3 bg-red-50 text-center font-semibold">
+              <td className="border-2 border-gray-300 p-2 bg-red-50 text-center font-semibold">
                 H₁ True
               </td>
               {/* False Negative - Type II Error */}
@@ -156,26 +156,26 @@ export const TwoByTwoCard: React.FC<TwoByTwoCardProps> = ({ data, state, scenari
       </div>
 
       {/* Summary stats */}
-      <div className="mt-4 grid grid-cols-2 md:grid-cols-4 gap-3 text-center">
-        <div className="p-3 bg-red-50 rounded-md border border-red-200">
+      <div className="mt-2 grid grid-cols-2 md:grid-cols-4 gap-2 text-center">
+        <div className="p-2 bg-red-50 rounded-md border border-red-200">
           <div className="text-xs text-gray-600 mb-1">Type I Rate</div>
           <div className="text-lg font-bold" style={{ color: COLORS.TYPE1 }}>
             {(state.alpha * 100).toFixed(1)}%
           </div>
         </div>
-        <div className="p-3 bg-blue-50 rounded-md border border-blue-200">
+        <div className="p-2 bg-blue-50 rounded-md border border-blue-200">
           <div className="text-xs text-gray-600 mb-1">Type II Rate</div>
           <div className="text-lg font-bold" style={{ color: COLORS.TYPE2 }}>
             {((data.falseNegative / (data.falseNegative + data.truePositive)) * 100).toFixed(1)}%
           </div>
         </div>
-        <div className="p-3 bg-green-50 rounded-md border border-green-200">
+        <div className="p-2 bg-green-50 rounded-md border border-green-200">
           <div className="text-xs text-gray-600 mb-1">Power</div>
           <div className="text-lg font-bold" style={{ color: COLORS.POWER }}>
             {((data.truePositive / (data.falseNegative + data.truePositive)) * 100).toFixed(1)}%
           </div>
         </div>
-        <div className="p-3 bg-gray-50 rounded-md border border-gray-200">
+        <div className="p-2 bg-gray-50 rounded-md border border-gray-200">
           <div className="text-xs text-gray-600 mb-1">Total Cases</div>
           <div className="text-lg font-bold text-gray-800">
             {total.toLocaleString()}
@@ -184,7 +184,7 @@ export const TwoByTwoCard: React.FC<TwoByTwoCardProps> = ({ data, state, scenari
       </div>
 
       {/* Explanation */}
-      <div className="mt-3 p-3 bg-purple-50 rounded-md border border-purple-200">
+      <div className="mt-1 p-2 bg-purple-50 rounded-md border border-purple-200">
         <p className="text-xs text-purple-900 leading-relaxed">
           <strong>Understanding the table:</strong> Out of {total.toLocaleString()} hypothetical cases,{' '}
           {((state.prevalence * 100).toFixed(0))}% truly have H₁ (effect exists).

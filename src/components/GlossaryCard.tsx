@@ -8,10 +8,10 @@ export const GlossaryCard: React.FC = () => {
 
   return (
     <div className="bg-white rounded-lg shadow-md p-4">
-      <h3 className="text-xl font-bold text-gray-800 mb-3">Reference & Glossary</h3>
+      <h3 className="text-xl font-bold text-gray-800 mb-1">Reference & Glossary</h3>
 
-      <div className="mb-4">
-        <div className="flex gap-2 mb-4">
+      <div className="mb-2">
+        <div className="flex gap-2 mb-2">
           <button
             onClick={() => setShowMisconceptions(false)}
             className={`px-4 py-2 rounded-md font-medium text-sm transition-colors ${
@@ -59,7 +59,7 @@ export const GlossaryCard: React.FC = () => {
                       transition={{ duration: 0.2 }}
                       className="overflow-hidden"
                     >
-                      <div className="p-3 bg-white border-t border-gray-200">
+                      <div className="p-2 bg-white border-t border-gray-200">
                         <p className="text-sm text-gray-700 mb-2">{item.definition}</p>
                         {item.example && (
                           <p className="text-xs text-gray-600 italic">
@@ -74,7 +74,7 @@ export const GlossaryCard: React.FC = () => {
             ))}
           </div>
         ) : (
-          <div className="space-y-4">
+          <div className="space-y-2">
             {commonMisconceptions.map((item, idx) => (
               <div key={idx} className="p-4 bg-red-50 border border-red-200 rounded-md">
                 <h4 className="font-bold text-red-800 mb-2">

@@ -70,8 +70,8 @@ export const Scenarios: React.FC = () => {
   const tableData = calculate2x2Data(selectedScenario.state, derived);
 
   return (
-    <div className="max-w-7xl mx-auto space-y-4">
-      <div className="text-center mb-4">
+    <div className="max-w-7xl mx-auto space-y-2">
+      <div className="text-center mb-2">
         <h1 className="text-3xl font-bold text-gray-900 mb-2">
           Real-World Scenarios
         </h1>
@@ -87,7 +87,7 @@ export const Scenarios: React.FC = () => {
       />
 
       {/* Visualizations for selected scenario */}
-      <div className="grid grid-cols-1 lg:grid-cols-2 gap-4">
+      <div className="grid grid-cols-1 lg:grid-cols-2 gap-2">
         <DistributionPlot
           state={selectedScenario.state}
           derived={derived}
@@ -104,12 +104,12 @@ export const Scenarios: React.FC = () => {
 
       {/* Context-specific insights */}
       <div className="bg-gradient-to-r from-indigo-50 to-purple-50 rounded-lg p-4 border border-indigo-200">
-        <h3 className="text-lg font-bold text-indigo-900 mb-3">
+        <h3 className="text-lg font-bold text-indigo-900 mb-1">
           Understanding {selectedScenario.name}
         </h3>
-        <p className="text-gray-700 mb-4">{selectedScenario.context}</p>
+        <p className="text-gray-700 mb-2">{selectedScenario.context}</p>
 
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-4 text-sm">
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-2 text-sm">
           <div className="p-4 bg-white rounded border border-red-200">
             <h4 className="font-bold text-red-800 mb-2">Cost of Type I Error</h4>
             <p className="text-gray-700">{selectedScenario.metaphor.type1Description}</p>
@@ -126,7 +126,7 @@ export const Scenarios: React.FC = () => {
           </div>
         </div>
 
-        <div className="mt-4 p-3 bg-yellow-50 rounded border border-yellow-200">
+        <div className="mt-2 p-2 bg-yellow-50 rounded border border-yellow-200">
           <p className="text-xs text-yellow-900">
             <strong>Key insight:</strong> Different scenarios may warrant different α levels.
             In medical screening for serious diseases, we might accept higher α (more false positives)
