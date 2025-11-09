@@ -66,7 +66,8 @@ export const DistributionPlot: React.FC<DistributionPlotProps> = ({
         x: parseFloat(x.toFixed(3)),
         h0: parseFloat(h0Density.toFixed(4)),
         h1: parseFloat(h1Density.toFixed(4)),
-        inRejectionRegion,
+        // Only show h0 value in rejection region for shading
+        h0Rejection: inRejectionRegion ? parseFloat(h0Density.toFixed(4)) : null,
       });
     }
 
@@ -112,20 +113,16 @@ export const DistributionPlot: React.FC<DistributionPlotProps> = ({
             wrapperStyle={{ paddingBottom: '20px' }}
           />
 
-          {/* Shaded rejection regions */}
-          {data.map((point, idx) => {
-            if (!point.inRejectionRegion) return null;
-            return (
-              <Area
-                key={`rejection-${idx}`}
-                type="monotone"
-                dataKey="h0"
-                fill={COLORS.TYPE1}
-                fillOpacity={0.2}
-                stroke="none"
-              />
-            );
-          })}
+          {/* Shaded rejection region - only shows where we reject H0 */}
+          <Area
+            type="monotone"
+            dataKey="h0Rejection"
+            fill={COLORS.TYPE1}
+            fillOpacity={0.3}
+            stroke="none"
+            isAnimationActive={false}
+            connectNulls={false}
+          />
 
           {/* H0 distribution */}
           <Line
