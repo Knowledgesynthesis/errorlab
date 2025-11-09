@@ -106,6 +106,7 @@ export const PowerCurve: React.FC<PowerCurveProps> = ({ state }) => {
             <CartesianGrid strokeDasharray="3 3" stroke="#e5e7eb" />
             <XAxis
               dataKey="x"
+              type="number"
               domain={variable === 'n' ? [0, 'auto'] : ['auto', 'auto']}
               label={{
                 value: variable === 'n' ? 'Sample Size (n)' : 'Effect Size (δ)',
