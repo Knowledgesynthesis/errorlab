@@ -41,8 +41,8 @@ export const Power: React.FC = () => {
   const derived = calculateDerivedValues(state);
 
   return (
-    <div className="max-w-7xl mx-auto space-y-6">
-      <div className="text-center mb-6">
+    <div className="max-w-7xl mx-auto space-y-4">
+      <div className="text-center mb-4">
         <h1 className="text-3xl font-bold text-gray-900 mb-2">
           Power Analysis
         </h1>
@@ -52,7 +52,7 @@ export const Power: React.FC = () => {
       </div>
 
       {/* Educational intro */}
-      <div className="bg-green-50 rounded-lg p-6 border border-green-200">
+      <div className="bg-green-50 rounded-lg p-4 border border-green-200">
         <h2 className="text-xl font-bold text-green-900 mb-3">
           Understanding Statistical Power
         </h2>
@@ -83,7 +83,7 @@ export const Power: React.FC = () => {
         </div>
       </div>
 
-      <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
+      <div className="grid grid-cols-1 lg:grid-cols-3 gap-4">
         <div className="lg:col-span-1">
           <ControlPanel
             state={state}
@@ -92,7 +92,7 @@ export const Power: React.FC = () => {
           />
 
           {/* Current power display */}
-          <div className="mt-6 bg-white rounded-lg shadow-md p-6">
+          <div className="mt-4 bg-white rounded-lg shadow-md p-4">
             <h3 className="text-lg font-bold text-gray-800 mb-4">Current Settings</h3>
             <div className="space-y-3">
               <div className="p-3 bg-green-50 rounded border border-green-200">
@@ -119,7 +119,7 @@ export const Power: React.FC = () => {
           <PowerCurve state={state} />
 
           {/* Power recommendations */}
-          <div className="mt-6 bg-yellow-50 rounded-lg p-6 border border-yellow-200">
+          <div className="mt-4 bg-yellow-50 rounded-lg p-4 border border-yellow-200">
             <h3 className="text-lg font-bold text-yellow-900 mb-3">
               Power Recommendations
             </h3>

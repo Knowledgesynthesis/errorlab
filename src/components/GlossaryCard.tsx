@@ -7,10 +7,10 @@ export const GlossaryCard: React.FC = () => {
   const [showMisconceptions, setShowMisconceptions] = useState(false);
 
   return (
-    <div className="bg-white rounded-lg shadow-md p-6">
-      <h3 className="text-xl font-bold text-gray-800 mb-4">Reference & Glossary</h3>
+    <div className="bg-white rounded-lg shadow-md p-4">
+      <h3 className="text-xl font-bold text-gray-800 mb-3">Reference & Glossary</h3>
 
-      <div className="mb-6">
+      <div className="mb-4">
         <div className="flex gap-2 mb-4">
           <button
             onClick={() => setShowMisconceptions(false)}

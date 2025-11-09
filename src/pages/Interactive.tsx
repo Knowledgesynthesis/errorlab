@@ -52,8 +52,8 @@ export const Interactive: React.FC = () => {
   const tableData = calculate2x2Data(state, derived);
 
   return (
-    <div className="max-w-7xl mx-auto space-y-6">
-      <div className="text-center mb-6">
+    <div className="max-w-7xl mx-auto space-y-4">
+      <div className="text-center mb-4">
         <h1 className="text-3xl font-bold text-gray-900 mb-2">
           Interactive Hypothesis Testing
         </h1>
@@ -69,7 +69,7 @@ export const Interactive: React.FC = () => {
       />
 
       {/* Main content */}
-      <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
+      <div className="grid grid-cols-1 lg:grid-cols-3 gap-4">
         {/* Left column - Controls */}
         <div className="lg:col-span-1">
           <ControlPanel
@@ -79,7 +79,7 @@ export const Interactive: React.FC = () => {
           />
 
           {/* Key metrics */}
-          <div className="mt-6 bg-white rounded-lg shadow-md p-6">
+          <div className="mt-4 bg-white rounded-lg shadow-md p-4">
             <h3 className="text-lg font-bold text-gray-800 mb-4">Current Metrics</h3>
             <div className="space-y-3">
               <div className="flex justify-between items-center">
@@ -105,7 +105,7 @@ export const Interactive: React.FC = () => {
         </div>
 
         {/* Right column - Visualizations */}
-        <div className="lg:col-span-2 space-y-6">
+        <div className="lg:col-span-2 space-y-4">
           <DistributionPlot
             state={state}
             derived={derived}
@@ -122,7 +122,7 @@ export const Interactive: React.FC = () => {
       </div>
 
       {/* Educational callout */}
-      <div className="bg-gradient-to-r from-yellow-50 to-orange-50 rounded-lg p-6 border border-yellow-200">
+      <div className="bg-gradient-to-r from-yellow-50 to-orange-50 rounded-lg p-4 border border-yellow-200">
         <h3 className="text-lg font-bold text-gray-800 mb-3">
           Try This:
         </h3>

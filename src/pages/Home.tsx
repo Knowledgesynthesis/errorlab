@@ -44,7 +44,7 @@ export const Home: React.FC = () => {
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.5 }}
-        className="text-center mb-12"
+        className="text-center mb-6"
       >
         <h1 className="text-5xl font-bold text-gray-900 mb-4">
           ErrorLab
@@ -63,9 +63,9 @@ export const Home: React.FC = () => {
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.5, delay: 0.2 }}
-        className="mb-12"
+        className="mb-6"
       >
-        <h2 className="text-2xl font-bold text-gray-800 mb-6 text-center">
+        <h2 className="text-2xl font-bold text-gray-800 mb-4 text-center">
           Core Concepts
         </h2>
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
@@ -86,17 +86,17 @@ export const Home: React.FC = () => {
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.5, delay: 0.4 }}
-        className="mb-12"
+        className="mb-6"
       >
-        <h2 className="text-2xl font-bold text-gray-800 mb-6 text-center">
+        <h2 className="text-2xl font-bold text-gray-800 mb-4 text-center">
           Explore & Learn
         </h2>
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
           {features.map((feature, idx) => (
             <Link
               key={idx}
               to={feature.link}
-              className="block p-6 bg-white rounded-lg shadow-md hover:shadow-lg transition-shadow border-2 border-transparent hover:border-blue-500"
+              className="block p-4 bg-white rounded-lg shadow-md hover:shadow-lg transition-shadow border-2 border-transparent hover:border-blue-500"
             >
               <div className="text-4xl mb-3">{feature.icon}</div>
               <h3 className="text-xl font-bold text-gray-800 mb-2">{feature.title}</h3>
@@ -111,9 +111,9 @@ export const Home: React.FC = () => {
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.5, delay: 0.6 }}
-        className="bg-gradient-to-r from-blue-50 to-purple-50 rounded-lg p-8 border border-blue-200"
+        className="bg-gradient-to-r from-blue-50 to-purple-50 rounded-lg p-4 border border-blue-200"
       >
-        <h2 className="text-2xl font-bold text-gray-800 mb-4">
+        <h2 className="text-2xl font-bold text-gray-800 mb-3">
           How It Works
         </h2>
         <ol className="space-y-3 text-gray-700">

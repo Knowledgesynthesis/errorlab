@@ -70,8 +70,8 @@ export const Scenarios: React.FC = () => {
   const tableData = calculate2x2Data(selectedScenario.state, derived);
 
   return (
-    <div className="max-w-7xl mx-auto space-y-6">
-      <div className="text-center mb-6">
+    <div className="max-w-7xl mx-auto space-y-4">
+      <div className="text-center mb-4">
         <h1 className="text-3xl font-bold text-gray-900 mb-2">
           Real-World Scenarios
         </h1>
@@ -87,7 +87,7 @@ export const Scenarios: React.FC = () => {
       />
 
       {/* Visualizations for selected scenario */}
-      <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+      <div className="grid grid-cols-1 lg:grid-cols-2 gap-4">
         <DistributionPlot
           state={selectedScenario.state}
           derived={derived}
@@ -103,7 +103,7 @@ export const Scenarios: React.FC = () => {
       </div>
 
       {/* Context-specific insights */}
-      <div className="bg-gradient-to-r from-indigo-50 to-purple-50 rounded-lg p-6 border border-indigo-200">
+      <div className="bg-gradient-to-r from-indigo-50 to-purple-50 rounded-lg p-4 border border-indigo-200">
         <h3 className="text-lg font-bold text-indigo-900 mb-3">
           Understanding {selectedScenario.name}
         </h3>
