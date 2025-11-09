@@ -186,7 +186,7 @@ export const DistributionPlot: React.FC<DistributionPlotProps> = ({
           {/* Sample test statistic */}
           {sampleData && (
             <ReferenceLine
-              x={sampleData.testStatistic.toFixed(3)}
+              x={parseFloat(sampleData.testStatistic.toFixed(3))}
               stroke="#8b5cf6"
               strokeWidth={3}
               label={{
@@ -195,6 +195,7 @@ export const DistributionPlot: React.FC<DistributionPlotProps> = ({
                 fill: '#8b5cf6',
                 fontSize: 12,
               }}
+              name="Observed Test Statistic"
             />
           )}
         </ComposedChart>
