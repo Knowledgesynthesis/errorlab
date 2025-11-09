@@ -72,7 +72,7 @@ export const PValueExplorer: React.FC<PValueExplorerProps> = ({ state, onSeedCha
                   {sampleData.mean.toFixed(3)}
                 </div>
                 <div className="text-xs text-gray-500 mt-1">
-                  (True: {underH1 ? state.delta.toFixed(2) : '0'})
+                  (True: {underH1 ? (state.sidedness === 'one-sided-left' ? (-state.delta).toFixed(2) : state.delta.toFixed(2)) : '0'})
                 </div>
               </div>
 
@@ -131,6 +131,18 @@ export const PValueExplorer: React.FC<PValueExplorerProps> = ({ state, onSeedCha
                 {(sampleData.pValue * 100).toFixed(2)}% of the time by random chance."
               </p>
             </div>
+
+            {/* Explanation for H1 sampling */}
+            {underH1 && sampleData.pValue < 0.001 && (
+              <div className="p-4 bg-green-50 rounded-md border border-green-200">
+                <p className="text-xs text-green-900 leading-relaxed">
+                  <strong>Why is the p-value so small?</strong> You generated data from H₁ (where an effect exists).
+                  When H₁ is true with a reasonable effect size and sample size, you'll almost always get very small p-values.
+                  This demonstrates <strong>statistical power</strong> - the ability to detect real effects!
+                  Try reducing the effect size (δ) or sample size (n) to see more variation in p-values.
+                </p>
+              </div>
+            )}
           </div>
         )}
 
