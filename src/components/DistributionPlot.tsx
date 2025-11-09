@@ -12,7 +12,7 @@ import {
   ResponsiveContainer,
 } from 'recharts';
 import type { ExperimentState, DerivedValues, SampleData } from '../types';
-import { normalPDF, tPDF, getStandardError } from '../utils/statistics';
+import { normalPDF, tPDF } from '../utils/statistics';
 import { COLORS, DISTRIBUTION_POINTS } from '../utils/constants';
 
 interface DistributionPlotProps {
@@ -31,11 +31,10 @@ export const DistributionPlot: React.FC<DistributionPlotProps> = ({
   scenarioId,
 }) => {
   const data = useMemo(() => {
-    const { delta, sigma, n, testType } = state;
+    const { testType } = state;
     const { rejectionRegion, ncp } = derived;
 
-    const se = getStandardError(sigma, n);
-    const df = testType === 't-test' ? n - 1 : undefined;
+    const df = testType === 't-test' ? state.n - 1 : undefined;
 
     // Determine x-axis range based on scenario
     let xMin: number;
@@ -44,15 +43,14 @@ export const DistributionPlot: React.FC<DistributionPlotProps> = ({
     // Set custom ranges for specific scenarios
     if (scenarioId === 'medical' || scenarioId === 'ab-test') {
       xMin = -4.2;
-      xMax = Math.max(4.2, Math.abs(delta / se) + 2);
+      xMax = 10;
     } else if (scenarioId === 'quality-control') {
       xMin = -4.4;
-      xMax = Math.max(4.4, Math.abs(delta / se) + 2);
+      xMax = 10;
     } else {
-      // Default: compact to minimize wasted space
-      const maxRange = Math.max(3.0, Math.abs(delta / se) + 2);
-      xMin = -maxRange;
-      xMax = maxRange;
+      // Default: also start at -4.2 and extend to 10
+      xMin = -4.2;
+      xMax = 10;
     }
 
     const step = (xMax - xMin) / DISTRIBUTION_POINTS;
