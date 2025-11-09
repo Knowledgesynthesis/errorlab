@@ -44,12 +44,12 @@ export const Home: React.FC = () => {
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.5 }}
-        className="text-center mb-6"
+        className="text-center mb-2"
       >
-        <h1 className="text-5xl font-bold text-gray-900 mb-4">
+        <h1 className="text-5xl font-bold text-gray-900 mb-1">
           ErrorLab
         </h1>
-        <p className="text-2xl text-gray-600 mb-6">
+        <p className="text-2xl text-gray-600 mb-2">
           Interactive Stats Playground
         </p>
         <p className="text-lg text-gray-700 max-w-3xl mx-auto">
@@ -63,18 +63,18 @@ export const Home: React.FC = () => {
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.5, delay: 0.2 }}
-        className="mb-6"
+        className="mb-2"
       >
-        <h2 className="text-2xl font-bold text-gray-800 mb-4 text-center">
+        <h2 className="text-2xl font-bold text-gray-800 mb-1 text-center">
           Core Concepts
         </h2>
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-2">
           {concepts.map((concept, idx) => (
             <div
               key={idx}
-              className={`p-4 rounded-lg border-2 ${concept.color}`}
+              className={`p-2 rounded-lg border-2 ${concept.color}`}
             >
-              <h3 className="font-bold text-gray-800 mb-2">{concept.term}</h3>
+              <h3 className="font-bold text-gray-800 mb-1">{concept.term}</h3>
               <p className="text-sm text-gray-700">{concept.desc}</p>
             </div>
           ))}
@@ -86,20 +86,20 @@ export const Home: React.FC = () => {
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.5, delay: 0.4 }}
-        className="mb-6"
+        className="mb-2"
       >
-        <h2 className="text-2xl font-bold text-gray-800 mb-4 text-center">
+        <h2 className="text-2xl font-bold text-gray-800 mb-1 text-center">
           Explore & Learn
         </h2>
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-2">
           {features.map((feature, idx) => (
             <Link
               key={idx}
               to={feature.link}
-              className="block p-4 bg-white rounded-lg shadow-md hover:shadow-lg transition-shadow border-2 border-transparent hover:border-blue-500"
+              className="block p-2 bg-white rounded-lg shadow-md hover:shadow-lg transition-shadow border-2 border-transparent hover:border-blue-500"
             >
-              <div className="text-4xl mb-3">{feature.icon}</div>
-              <h3 className="text-xl font-bold text-gray-800 mb-2">{feature.title}</h3>
+              <div className="text-4xl mb-1">{feature.icon}</div>
+              <h3 className="text-xl font-bold text-gray-800 mb-1">{feature.title}</h3>
               <p className="text-gray-600">{feature.description}</p>
             </Link>
           ))}
@@ -111,12 +111,12 @@ export const Home: React.FC = () => {
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.5, delay: 0.6 }}
-        className="bg-gradient-to-r from-blue-50 to-purple-50 rounded-lg p-4 border border-blue-200"
+        className="bg-gradient-to-r from-blue-50 to-purple-50 rounded-lg p-2 border border-blue-200"
       >
-        <h2 className="text-2xl font-bold text-gray-800 mb-3">
+        <h2 className="text-2xl font-bold text-gray-800 mb-1">
           How It Works
         </h2>
-        <ol className="space-y-3 text-gray-700">
+        <ol className="space-y-1 text-gray-700">
           <li className="flex items-start">
             <span className="font-bold text-blue-600 mr-3">1.</span>
             <span>
@@ -148,10 +148,10 @@ export const Home: React.FC = () => {
             </span>
           </li>
         </ol>
-        <div className="mt-6">
+        <div className="mt-2">
           <Link
             to="/interactive"
-            className="inline-block px-6 py-3 bg-blue-600 hover:bg-blue-700 text-white font-bold rounded-lg transition-colors"
+            className="inline-block px-4 py-2 bg-blue-600 hover:bg-blue-700 text-white font-bold rounded-lg transition-colors"
           >
             Start Exploring →
           </Link>

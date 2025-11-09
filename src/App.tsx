@@ -21,8 +21,8 @@ const Navigation: React.FC = () => {
 
   return (
     <nav className="bg-white shadow-md sticky top-0 z-50">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="flex justify-between items-center h-12">
+      <div className="max-w-7xl mx-auto px-2 sm:px-3 lg:px-4">
+        <div className="flex justify-between items-center h-10">
           <Link to="/" className="flex items-center space-x-2">
             <span className="text-2xl font-bold text-blue-600">ErrorLab</span>
           </Link>
@@ -32,7 +32,7 @@ const Navigation: React.FC = () => {
               <Link
                 key={item.path}
                 to={item.path}
-                className={`px-4 py-2 rounded-md text-sm font-medium transition-colors ${
+                className={`px-2 py-1 rounded-md text-sm font-medium transition-colors ${
                   location.pathname === item.path
                     ? 'bg-blue-600 text-white'
                     : 'text-gray-700 hover:bg-gray-100'
@@ -66,7 +66,7 @@ const Navigation: React.FC = () => {
             <Link
               key={item.path}
               to={item.path}
-              className={`block px-3 py-2 rounded-md text-base font-medium ${
+              className={`block px-2 py-1 rounded-md text-base font-medium ${
                 location.pathname === item.path
                   ? 'bg-blue-600 text-white'
                   : 'text-gray-700 hover:bg-gray-100'
@@ -86,8 +86,8 @@ const Footer: React.FC = () => {
   const currentYear = new Date().getFullYear();
 
   return (
-    <footer className="bg-gray-50 border-t border-gray-200 mt-6">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4">
+    <footer className="bg-gray-50 border-t border-gray-200 mt-2">
+      <div className="max-w-7xl mx-auto px-2 sm:px-3 lg:px-4 py-2">
         <div className="text-center text-sm text-gray-600">
           <p>
             <strong>ErrorLab</strong> © {currentYear}
@@ -104,7 +104,7 @@ const App: React.FC = () => {
       <div className="min-h-screen bg-gray-50 flex flex-col">
         <Navigation />
 
-        <main className="flex-grow px-4 sm:px-6 lg:px-8 py-4">
+        <main className="flex-grow px-2 sm:px-3 lg:px-4 py-2">
           <Routes>
             <Route path="/" element={<Home />} />
             <Route path="/interactive" element={<Interactive />} />

@@ -3,8 +3,8 @@ import { GlossaryCard } from '../components/GlossaryCard';
 
 export const Reference: React.FC = () => {
   return (
-    <div className="max-w-5xl mx-auto space-y-4">
-      <div className="text-center mb-4">
+    <div className="max-w-5xl mx-auto space-y-2">
+      <div className="text-center mb-2">
         <h1 className="text-3xl font-bold text-gray-900 mb-2">
           Reference & Help
         </h1>
@@ -16,10 +16,10 @@ export const Reference: React.FC = () => {
       <GlossaryCard />
 
       {/* Key formulas */}
-      <div className="bg-white rounded-lg shadow-md p-4">
-        <h3 className="text-xl font-bold text-gray-800 mb-3">Key Formulas</h3>
+      <div className="bg-white rounded-lg shadow-md p-2">
+        <h3 className="text-xl font-bold text-gray-800 mb-2">Key Formulas</h3>
 
-        <div className="space-y-4">
+        <div className="space-y-2">
           <div className="p-4 bg-gray-50 rounded-md border border-gray-200">
             <h4 className="font-bold text-gray-800 mb-2">Test Statistic (one-sample z-test)</h4>
             <div className="font-mono text-sm bg-white p-3 rounded border border-gray-300 mb-2">
@@ -77,10 +77,10 @@ export const Reference: React.FC = () => {
       </div>
 
       {/* Decision flowchart */}
-      <div className="bg-white rounded-lg shadow-md p-4">
-        <h3 className="text-xl font-bold text-gray-800 mb-3">When to Use What</h3>
+      <div className="bg-white rounded-lg shadow-md p-2">
+        <h3 className="text-xl font-bold text-gray-800 mb-2">When to Use What</h3>
 
-        <div className="space-y-4">
+        <div className="space-y-2">
           <div className="p-4 bg-blue-50 rounded-md border-l-4 border-blue-500">
             <h4 className="font-bold text-blue-900 mb-2">Use z-test when:</h4>
             <ul className="list-disc list-inside text-sm text-gray-700 space-y-1">
@@ -111,8 +111,8 @@ export const Reference: React.FC = () => {
       </div>
 
       {/* Additional resources */}
-      <div className="bg-gradient-to-r from-gray-50 to-blue-50 rounded-lg p-4 border border-gray-200">
-        <h3 className="text-lg font-bold text-gray-800 mb-3">
+      <div className="bg-gradient-to-r from-gray-50 to-blue-50 rounded-lg p-2 border border-gray-200">
+        <h3 className="text-lg font-bold text-gray-800 mb-1">
           Additional Tips
         </h3>
         <ul className="space-y-2 text-sm text-gray-700">

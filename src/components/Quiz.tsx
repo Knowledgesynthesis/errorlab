@@ -46,9 +46,9 @@ export const Quiz: React.FC<QuizProps> = ({ questions }) => {
   if (completed) {
     return (
       <div className="bg-white rounded-lg shadow-md p-4">
-        <h3 className="text-2xl font-bold text-gray-800 mb-3">Quiz Complete!</h3>
+        <h3 className="text-2xl font-bold text-gray-800 mb-1">Quiz Complete!</h3>
         <div className="text-center py-8">
-          <div className="text-6xl font-bold mb-4" style={{ color: score / questions.length >= 0.7 ? '#10b981' : '#f59e0b' }}>
+          <div className="text-6xl font-bold mb-2" style={{ color: score / questions.length >= 0.7 ? '#10b981' : '#f59e0b' }}>
             {score} / {questions.length}
           </div>
           <p className="text-lg text-gray-700 mb-6">
@@ -69,18 +69,18 @@ export const Quiz: React.FC<QuizProps> = ({ questions }) => {
 
   return (
     <div className="bg-white rounded-lg shadow-md p-4">
-      <div className="flex justify-between items-center mb-3">
+      <div className="flex justify-between items-center mb-1">
         <h3 className="text-xl font-bold text-gray-800">Quick Check</h3>
         <span className="text-sm text-gray-600">
           Question {currentQuestionIndex + 1} of {questions.length}
         </span>
       </div>
 
-      <div className="mb-4">
-        <p className="text-base text-gray-800 font-medium mb-3">{currentQuestion.question}</p>
+      <div className="mb-2">
+        <p className="text-base text-gray-800 font-medium mb-1">{currentQuestion.question}</p>
 
         {currentQuestion.hint && !showFeedback && (
-          <div className="mb-3 p-3 bg-yellow-50 rounded-md border border-yellow-200">
+          <div className="mb-1 p-2 bg-yellow-50 rounded-md border border-yellow-200">
             <p className="text-xs text-yellow-800">
               <strong>Hint:</strong> {currentQuestion.hint}
             </p>
@@ -129,7 +129,7 @@ export const Quiz: React.FC<QuizProps> = ({ questions }) => {
           <button
             onClick={() => selectedAnswer !== null && handleAnswerSelect(selectedAnswer)}
             disabled={selectedAnswer === null}
-            className="mt-3 px-4 py-2 bg-blue-600 hover:bg-blue-700 text-white rounded-md font-medium transition-colors disabled:bg-gray-300 disabled:cursor-not-allowed"
+            className="mt-1 px-4 py-2 bg-blue-600 hover:bg-blue-700 text-white rounded-md font-medium transition-colors disabled:bg-gray-300 disabled:cursor-not-allowed"
           >
             Submit Answer
           </button>
@@ -142,7 +142,7 @@ export const Quiz: React.FC<QuizProps> = ({ questions }) => {
             initial={{ opacity: 0, y: -10 }}
             animate={{ opacity: 1, y: 0 }}
             exit={{ opacity: 0, y: -10 }}
-            className={`mb-4 p-4 rounded-lg border ${
+            className={`mb-2 p-4 rounded-lg border ${
               isCorrect
                 ? 'bg-green-50 border-green-200'
                 : 'bg-red-50 border-red-200'
@@ -171,7 +171,7 @@ export const Quiz: React.FC<QuizProps> = ({ questions }) => {
       )}
 
       {/* Progress bar */}
-      <div className="mt-4">
+      <div className="mt-2">
         <div className="w-full bg-gray-200 rounded-full h-2">
           <div
             className="bg-blue-600 h-2 rounded-full transition-all duration-300"

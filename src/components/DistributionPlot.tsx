@@ -95,7 +95,7 @@ export const DistributionPlot: React.FC<DistributionPlotProps> = ({
 
   return (
     <div className="bg-white rounded-lg shadow-md p-4">
-      <h3 className="text-xl font-bold text-gray-800 mb-4">
+      <h3 className="text-xl font-bold text-gray-800 mb-2">
         Sampling Distributions
       </h3>
 
@@ -202,7 +202,7 @@ export const DistributionPlot: React.FC<DistributionPlotProps> = ({
       </div>
 
       {/* Legend explanations */}
-      <div className="mt-4 grid grid-cols-1 md:grid-cols-2 gap-3 text-sm">
+      <div className="mt-2 grid grid-cols-1 md:grid-cols-2 gap-2 text-sm">
         <div className="flex items-center space-x-2">
           <div className="w-4 h-4 rounded" style={{ backgroundColor: COLORS.H0 }}></div>
           <span className="text-gray-700">
@@ -234,7 +234,7 @@ export const DistributionPlot: React.FC<DistributionPlotProps> = ({
       </div>
 
       {/* Insights */}
-      <div className="mt-4 p-4 bg-amber-50 rounded-md border border-amber-200">
+      <div className="mt-2 p-4 bg-amber-50 rounded-md border border-amber-200">
         <p className="text-xs text-amber-900 leading-relaxed">
           <strong>What you're seeing:</strong> The shaded region shows where we reject H₀.
           Under H₀ (solid line), the probability of landing in this region is exactly α = {state.alpha.toFixed(3)}.
