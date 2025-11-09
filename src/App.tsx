@@ -92,6 +92,9 @@ const Footer: React.FC = () => {
           <p>
             <strong>ErrorLab</strong> © {currentYear}
           </p>
+          <p className="text-xs mt-1">
+            Made by Bashar Hasan, MD
+          </p>
         </div>
       </div>
     </footer>
