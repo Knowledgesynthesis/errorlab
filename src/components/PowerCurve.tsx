@@ -201,24 +201,43 @@ export const PowerCurve: React.FC<PowerCurveProps> = ({ state }) => {
         </ResponsiveContainer>
       </div>
 
-      {/* Insights */}
-      <div className="mt-1 grid grid-cols-1 md:grid-cols-2 gap-2">
-        <div className="p-2 bg-green-50 rounded-md border border-green-200">
-          <p className="text-xs text-green-900 leading-relaxed">
-            <strong>What is power?</strong> Power is the probability of correctly rejecting H₀ when H₁ is true.
-            Common targets are 80% or 90%. Higher power means fewer Type II errors.
-          </p>
-        </div>
-        <div className="p-2 bg-blue-50 rounded-md border border-blue-200">
-          <p className="text-xs text-blue-900 leading-relaxed">
-            <strong>How to increase power:</strong> Increase sample size (n), increase effect size (δ),
-            increase α (accept more Type I errors), or decrease variance (σ).
-          </p>
-        </div>
+      {/* How to Read This Figure */}
+      <div className="mt-2 p-2 bg-blue-50 rounded-md border border-blue-300">
+        <h4 className="text-sm font-bold text-blue-900 mb-1">📖 How to Read This Figure:</h4>
+        <ol className="text-xs text-blue-900 space-y-1 list-decimal list-inside">
+          <li><strong>X-axis:</strong> {variable === 'n' ? 'Sample size (n) - how many observations in your study' : 'Effect size (δ) - the magnitude of the real difference you\'re trying to detect'}</li>
+          <li><strong>Y-axis:</strong> Power (1-β) - probability of correctly detecting the effect when it exists (ranges from 0 to 1)</li>
+          <li><strong>Green line:</strong> Shows how power changes as you vary {variable === 'n' ? 'sample size' : 'effect size'}</li>
+          <li><strong>Orange dashed line (80%):</strong> Conventional minimum power threshold - below this, studies are considered underpowered</li>
+          <li><strong>Green dashed line (90%):</strong> Higher power threshold - provides more confidence in detecting real effects</li>
+          <li><strong>Purple dashed line:</strong> Your current {variable === 'n' ? 'sample size' : 'effect size'} setting</li>
+        </ol>
+      </div>
+
+      {/* Key Observations */}
+      <div className="mt-2 p-2 bg-green-50 rounded-md border border-green-300">
+        <h4 className="text-sm font-bold text-green-900 mb-1">👁️ Key Observations:</h4>
+        <ul className="text-xs text-green-900 space-y-1">
+          {variable === 'n' ? (
+            <>
+              <li><strong>Shape of curve:</strong> Power increases rapidly at first, then levels off - there are diminishing returns to adding more samples</li>
+              <li><strong>Minimum sample size:</strong> Find where the curve crosses 80% power to see the minimum n needed for adequate power</li>
+              <li><strong>Current position:</strong> You're at n={currentValue}, giving {((curveData.find((d) => Math.abs(d.x - currentValue) < 0.5)?.power || 0) * 100).toFixed(1)}% power</li>
+              <li><strong>To reach 80% power:</strong> {((curveData.find((d) => Math.abs(d.x - currentValue) < 0.5)?.power || 0)) >= 0.8 ? 'You already have adequate power!' : 'Increase your sample size to where the curve crosses the orange line'}</li>
+            </>
+          ) : (
+            <>
+              <li><strong>Shape of curve:</strong> Power increases with larger effects - it's easier to detect big differences than small ones</li>
+              <li><strong>Detectable effect size:</strong> Find where the curve crosses 80% power to see the minimum δ you can reliably detect</li>
+              <li><strong>Current position:</strong> You're at δ={currentValue.toFixed(2)}, giving {((curveData.find((d) => Math.abs(d.x - currentValue) < 0.5)?.power || 0) * 100).toFixed(1)}% power</li>
+              <li><strong>Small effects:</strong> Notice how power drops dramatically for small effect sizes - detecting subtle differences requires large samples</li>
+            </>
+          )}
+        </ul>
       </div>
 
       {/* Current power display */}
-      <div className="mt-1 p-2 bg-purple-50 rounded-md border border-purple-200">
+      <div className="mt-2 p-2 bg-purple-50 rounded-md border border-purple-200">
         <div className="flex justify-between items-center">
           <span className="text-sm font-medium text-gray-700">
             Current Power at {variable} = {currentValue}:
@@ -232,6 +251,17 @@ export const PowerCurve: React.FC<PowerCurveProps> = ({ state }) => {
             ? `With n=${currentValue}, you have a ${((curveData.find((d) => Math.abs(d.x - currentValue) < 0.5)?.power || 0) * 100).toFixed(1)}% chance of detecting the effect if it exists.`
             : `With δ=${currentValue.toFixed(2)}, you have a ${((curveData.find((d) => Math.abs(d.x - currentValue) < 0.5)?.power || 0) * 100).toFixed(1)}% chance of detecting the effect if it exists.`}
         </p>
+      </div>
+
+      {/* Practical Tips */}
+      <div className="mt-2 p-2 bg-amber-50 rounded-md border border-amber-300">
+        <h4 className="text-sm font-bold text-amber-900 mb-1">💡 Practical Tips:</h4>
+        <ul className="text-xs text-amber-900 space-y-1">
+          <li><strong>What is power?</strong> Power is the probability of correctly rejecting H₀ when H₁ is true - it measures your study's ability to detect real effects</li>
+          <li><strong>Common targets:</strong> Aim for at least 80% power (90% for more critical studies)</li>
+          <li><strong>How to increase power:</strong> Increase sample size (n), increase effect size (δ), increase α (accept more Type I errors), or decrease variance (σ)</li>
+          <li><strong>Compare curves:</strong> Use "Save Curve" to compare different scenarios and find the best trade-off for your study</li>
+        </ul>
       </div>
     </div>
   );
