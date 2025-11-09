@@ -51,7 +51,15 @@ export const DistributionPlot: React.FC<DistributionPlotProps> = ({
     // H1 distribution is centered at ncp, so we need to show at least ncp + 3 standard deviations
     const h1Center = ncp || 0;
     const minXMax = 10; // Minimum extent as requested
-    const dynamicXMax = Math.max(minXMax, h1Center + 4, Math.abs(xMin)); // Extend to show H1 + margin
+    let dynamicXMax = Math.max(minXMax, h1Center + 4, Math.abs(xMin)); // Extend to show H1 + margin
+
+    // IMPORTANT: Extend range to include the observed test statistic if it exists
+    if (sampleData) {
+      const testStat = sampleData.testStatistic;
+      // Add margin around the test statistic so it's clearly visible
+      xMin = Math.min(xMin, testStat - 1);
+      dynamicXMax = Math.max(dynamicXMax, testStat + 1);
+    }
 
     xMax = dynamicXMax;
 
@@ -89,7 +97,7 @@ export const DistributionPlot: React.FC<DistributionPlotProps> = ({
     }
 
     return points;
-  }, [state, derived, scenarioId]);
+  }, [state, derived, scenarioId, sampleData]);
 
   const { criticalValues } = derived;
 
@@ -188,13 +196,12 @@ export const DistributionPlot: React.FC<DistributionPlotProps> = ({
             <ReferenceLine
               x={parseFloat(sampleData.testStatistic.toFixed(3))}
               stroke="#8b5cf6"
-              strokeWidth={4}
+              strokeWidth={3}
               label={{
                 value: `Observed: ${sampleData.testStatistic.toFixed(2)}`,
                 position: 'top',
                 fill: '#8b5cf6',
                 fontSize: 12,
-                fontWeight: 'bold',
               }}
               name="Observed Test Statistic"
             />
