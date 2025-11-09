@@ -9,6 +9,7 @@ import {
   Area,
   ComposedChart,
   ReferenceLine,
+  ResponsiveContainer,
 } from 'recharts';
 import type { ExperimentState, DerivedValues, SampleData } from '../types';
 import { normalPDF, tPDF, getStandardError } from '../utils/statistics';
@@ -34,8 +35,8 @@ export const DistributionPlot: React.FC<DistributionPlotProps> = ({
     const se = getStandardError(sigma, n);
     const df = testType === 't-test' ? n - 1 : undefined;
 
-    // Determine x-axis range
-    const maxRange = Math.max(4, Math.abs(delta / se) + 3);
+    // Determine x-axis range - more compact to reduce wasted space
+    const maxRange = Math.max(3.5, Math.abs(delta / se) + 2.5);
     const xMin = -maxRange;
     const xMax = maxRange;
     const step = (xMax - xMin) / DISTRIBUTION_POINTS;
@@ -82,13 +83,12 @@ export const DistributionPlot: React.FC<DistributionPlotProps> = ({
         Sampling Distributions
       </h3>
 
-      <div className="w-full overflow-x-auto">
-        <ComposedChart
-          width={700}
-          height={400}
-          data={data}
-          margin={{ top: 20, right: 30, left: 20, bottom: 20 }}
-        >
+      <div className="w-full" style={{ height: '400px' }}>
+        <ResponsiveContainer width="100%" height="100%">
+          <ComposedChart
+            data={data}
+            margin={{ top: 20, right: 20, left: 0, bottom: 20 }}
+          >
           <CartesianGrid strokeDasharray="3 3" stroke="#e5e7eb" />
           <XAxis
             dataKey="x"
@@ -181,6 +181,7 @@ export const DistributionPlot: React.FC<DistributionPlotProps> = ({
             />
           )}
         </ComposedChart>
+        </ResponsiveContainer>
       </div>
 
       {/* Legend explanations */}
