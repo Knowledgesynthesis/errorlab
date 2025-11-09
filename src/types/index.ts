@@ -158,3 +158,17 @@ export interface GlossaryTerm {
   definition: string;
   example?: string;
 }
+
+/**
+ * Key formula
+ */
+export interface KeyFormula {
+  name: string;
+  formula: string;
+  variables: Array<{
+    symbol: string;
+    meaning: string;
+  }>;
+  description: string;
+  example?: string;
+}
