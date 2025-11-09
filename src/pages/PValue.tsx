@@ -38,8 +38,8 @@ export const PValue: React.FC = () => {
   };
 
   return (
-    <div className="max-w-7xl mx-auto space-y-6">
-      <div className="text-center mb-6">
+    <div className="max-w-7xl mx-auto space-y-4">
+      <div className="text-center mb-4">
         <h1 className="text-3xl font-bold text-gray-900 mb-2">
           p-value Explorer
         </h1>
@@ -49,7 +49,7 @@ export const PValue: React.FC = () => {
       </div>
 
       {/* Educational intro */}
-      <div className="bg-purple-50 rounded-lg p-6 border border-purple-200">
+      <div className="bg-purple-50 rounded-lg p-4 border border-purple-200">
         <h2 className="text-xl font-bold text-purple-900 mb-3">
           What is a p-value?
         </h2>
@@ -78,7 +78,7 @@ export const PValue: React.FC = () => {
         </div>
       </div>
 
-      <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
+      <div className="grid grid-cols-1 lg:grid-cols-3 gap-4">
         <div className="lg:col-span-1">
           <ControlPanel
             state={state}

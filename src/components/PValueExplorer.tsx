@@ -28,11 +28,11 @@ export const PValueExplorer: React.FC<PValueExplorerProps> = ({ state, onSeedCha
   const derived = calculateDerivedValues(state);
 
   return (
-    <div className="space-y-6">
-      <div className="bg-white rounded-lg shadow-md p-6">
-        <h3 className="text-xl font-bold text-gray-800 mb-4">p-value Explorer</h3>
+    <div className="space-y-4">
+      <div className="bg-white rounded-lg shadow-md p-4">
+        <h3 className="text-xl font-bold text-gray-800 mb-3">p-value Explorer</h3>
 
-        <div className="mb-6">
+        <div className="mb-4">
           <p className="text-sm text-gray-700 mb-4">
             Generate a random sample and see where the test statistic falls on the H₀ distribution.
             The p-value is the probability (under H₀) of getting a result at least as extreme.

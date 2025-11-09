@@ -45,8 +45,8 @@ export const Quiz: React.FC<QuizProps> = ({ questions }) => {
 
   if (completed) {
     return (
-      <div className="bg-white rounded-lg shadow-md p-6">
-        <h3 className="text-2xl font-bold text-gray-800 mb-4">Quiz Complete!</h3>
+      <div className="bg-white rounded-lg shadow-md p-4">
+        <h3 className="text-2xl font-bold text-gray-800 mb-3">Quiz Complete!</h3>
         <div className="text-center py-8">
           <div className="text-6xl font-bold mb-4" style={{ color: score / questions.length >= 0.7 ? '#10b981' : '#f59e0b' }}>
             {score} / {questions.length}
@@ -68,19 +68,19 @@ export const Quiz: React.FC<QuizProps> = ({ questions }) => {
   const isCorrect = selectedAnswer?.toString() === currentQuestion.correctAnswer.toString();
 
   return (
-    <div className="bg-white rounded-lg shadow-md p-6">
-      <div className="flex justify-between items-center mb-4">
+    <div className="bg-white rounded-lg shadow-md p-4">
+      <div className="flex justify-between items-center mb-3">
         <h3 className="text-xl font-bold text-gray-800">Quick Check</h3>
         <span className="text-sm text-gray-600">
           Question {currentQuestionIndex + 1} of {questions.length}
         </span>
       </div>
 
-      <div className="mb-6">
-        <p className="text-base text-gray-800 font-medium mb-4">{currentQuestion.question}</p>
+      <div className="mb-4">
+        <p className="text-base text-gray-800 font-medium mb-3">{currentQuestion.question}</p>
 
         {currentQuestion.hint && !showFeedback && (
-          <div className="mb-4 p-3 bg-yellow-50 rounded-md border border-yellow-200">
+          <div className="mb-3 p-3 bg-yellow-50 rounded-md border border-yellow-200">
             <p className="text-xs text-yellow-800">
               <strong>Hint:</strong> {currentQuestion.hint}
             </p>
@@ -171,7 +171,7 @@ export const Quiz: React.FC<QuizProps> = ({ questions }) => {
       )}
 
       {/* Progress bar */}
-      <div className="mt-6">
+      <div className="mt-4">
         <div className="w-full bg-gray-200 rounded-full h-2">
           <div
             className="bg-blue-600 h-2 rounded-full transition-all duration-300"

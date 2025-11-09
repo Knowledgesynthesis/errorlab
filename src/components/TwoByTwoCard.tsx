@@ -22,11 +22,11 @@ export const TwoByTwoCard: React.FC<TwoByTwoCardProps> = ({ data, state, scenari
   };
 
   return (
-    <div className="bg-white rounded-lg shadow-md p-6">
-      <h3 className="text-xl font-bold text-gray-800 mb-4">2×2 Decision Table</h3>
+    <div className="bg-white rounded-lg shadow-md p-4">
+      <h3 className="text-xl font-bold text-gray-800 mb-3">2×2 Decision Table</h3>
 
       {scenario && (
-        <div className="mb-4 p-3 bg-gray-50 rounded-md text-sm text-gray-700">
+        <div className="mb-3 p-3 bg-gray-50 rounded-md text-sm text-gray-700">
           <p><strong>H₀:</strong> {scenario.h0}</p>
           <p><strong>H₁:</strong> {scenario.h1}</p>
         </div>
@@ -156,7 +156,7 @@ export const TwoByTwoCard: React.FC<TwoByTwoCardProps> = ({ data, state, scenari
       </div>
 
       {/* Summary stats */}
-      <div className="mt-6 grid grid-cols-2 md:grid-cols-4 gap-4 text-center">
+      <div className="mt-4 grid grid-cols-2 md:grid-cols-4 gap-3 text-center">
         <div className="p-3 bg-red-50 rounded-md border border-red-200">
           <div className="text-xs text-gray-600 mb-1">Type I Rate</div>
           <div className="text-lg font-bold" style={{ color: COLORS.TYPE1 }}>
@@ -184,7 +184,7 @@ export const TwoByTwoCard: React.FC<TwoByTwoCardProps> = ({ data, state, scenari
       </div>
 
       {/* Explanation */}
-      <div className="mt-4 p-4 bg-purple-50 rounded-md border border-purple-200">
+      <div className="mt-3 p-3 bg-purple-50 rounded-md border border-purple-200">
         <p className="text-xs text-purple-900 leading-relaxed">
           <strong>Understanding the table:</strong> Out of {total.toLocaleString()} hypothetical cases,{' '}
           {((state.prevalence * 100).toFixed(0))}% truly have H₁ (effect exists).

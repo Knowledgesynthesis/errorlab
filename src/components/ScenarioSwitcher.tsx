@@ -12,9 +12,9 @@ export const ScenarioSwitcher: React.FC<ScenarioSwitcherProps> = ({
   onScenarioChange,
 }) => {
   return (
-    <div className="bg-white rounded-lg shadow-md p-6">
-      <h3 className="text-xl font-bold text-gray-800 mb-4">Scenarios</h3>
-      <p className="text-sm text-gray-600 mb-4">
+    <div className="bg-white rounded-lg shadow-md p-4">
+      <h3 className="text-xl font-bold text-gray-800 mb-3">Scenarios</h3>
+      <p className="text-sm text-gray-600 mb-3">
         Load a preset scenario to see hypothesis testing in real-world contexts
       </p>
 
@@ -45,7 +45,7 @@ export const ScenarioSwitcher: React.FC<ScenarioSwitcherProps> = ({
       </div>
 
       {currentScenario && (
-        <div className="mt-6 p-4 bg-gradient-to-r from-blue-50 to-purple-50 rounded-md border border-blue-200">
+        <div className="mt-4 p-3 bg-gradient-to-r from-blue-50 to-purple-50 rounded-md border border-blue-200">
           <h4 className="font-bold text-gray-800 mb-2">Current Scenario: {currentScenario.name}</h4>
           <p className="text-sm text-gray-700 mb-3">{currentScenario.context}</p>
           <div className="grid grid-cols-1 md:grid-cols-2 gap-3 text-xs">

@@ -46,8 +46,8 @@ export const PowerCurve: React.FC<PowerCurveProps> = ({ state }) => {
   const currentValue = variable === 'n' ? state.n : state.delta;
 
   return (
-    <div className="bg-white rounded-lg shadow-md p-6">
-      <div className="flex justify-between items-center mb-4">
+    <div className="bg-white rounded-lg shadow-md p-4">
+      <div className="flex justify-between items-center mb-3">
         <h3 className="text-xl font-bold text-gray-800">Power Analysis</h3>
         <div className="flex gap-2">
           <button
@@ -69,7 +69,7 @@ export const PowerCurve: React.FC<PowerCurveProps> = ({ state }) => {
         </div>
       </div>
 
-      <div className="mb-4">
+      <div className="mb-3">
         <label className="text-sm font-medium text-gray-700 mr-3">Plot power vs:</label>
         <div className="inline-flex gap-2">
           <button
@@ -202,14 +202,14 @@ export const PowerCurve: React.FC<PowerCurveProps> = ({ state }) => {
       </div>
 
       {/* Insights */}
-      <div className="mt-4 grid grid-cols-1 md:grid-cols-2 gap-3">
-        <div className="p-4 bg-green-50 rounded-md border border-green-200">
+      <div className="mt-3 grid grid-cols-1 md:grid-cols-2 gap-3">
+        <div className="p-3 bg-green-50 rounded-md border border-green-200">
           <p className="text-xs text-green-900 leading-relaxed">
             <strong>What is power?</strong> Power is the probability of correctly rejecting H₀ when H₁ is true.
             Common targets are 80% or 90%. Higher power means fewer Type II errors.
           </p>
         </div>
-        <div className="p-4 bg-blue-50 rounded-md border border-blue-200">
+        <div className="p-3 bg-blue-50 rounded-md border border-blue-200">
           <p className="text-xs text-blue-900 leading-relaxed">
             <strong>How to increase power:</strong> Increase sample size (n), increase effect size (δ),
             increase α (accept more Type I errors), or decrease variance (σ).
@@ -218,7 +218,7 @@ export const PowerCurve: React.FC<PowerCurveProps> = ({ state }) => {
       </div>
 
       {/* Current power display */}
-      <div className="mt-4 p-4 bg-purple-50 rounded-md border border-purple-200">
+      <div className="mt-3 p-3 bg-purple-50 rounded-md border border-purple-200">
         <div className="flex justify-between items-center">
           <span className="text-sm font-medium text-gray-700">
             Current Power at {variable} = {currentValue}:

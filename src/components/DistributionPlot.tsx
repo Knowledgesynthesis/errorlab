@@ -94,7 +94,7 @@ export const DistributionPlot: React.FC<DistributionPlotProps> = ({
   const { criticalValues } = derived;
 
   return (
-    <div className="bg-white rounded-lg shadow-md p-6">
+    <div className="bg-white rounded-lg shadow-md p-4">
       <h3 className="text-xl font-bold text-gray-800 mb-4">
         Sampling Distributions
       </h3>
