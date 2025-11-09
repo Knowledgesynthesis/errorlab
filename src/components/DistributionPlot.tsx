@@ -183,17 +183,18 @@ export const DistributionPlot: React.FC<DistributionPlotProps> = ({
             />
           ))}
 
-          {/* Sample test statistic */}
+          {/* Sample test statistic - PURPLE LINE */}
           {sampleData && (
             <ReferenceLine
               x={parseFloat(sampleData.testStatistic.toFixed(3))}
               stroke="#8b5cf6"
-              strokeWidth={3}
+              strokeWidth={4}
               label={{
                 value: `Observed: ${sampleData.testStatistic.toFixed(2)}`,
                 position: 'top',
                 fill: '#8b5cf6',
                 fontSize: 12,
+                fontWeight: 'bold',
               }}
               name="Observed Test Statistic"
             />
