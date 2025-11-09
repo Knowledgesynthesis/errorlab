@@ -31,26 +31,67 @@
     @apply bg-gray-500;
   }
 
-  /* Range slider customization - highly visible */
+  /* Range slider customization - HIGHLY VISIBLE */
   input[type="range"] {
-    @apply appearance-none bg-transparent h-3;
+    @apply appearance-none bg-transparent;
+    height: 8px;
   }
 
+  /* Track styling - visible bar with border */
   input[type="range"]::-webkit-slider-track {
-    @apply h-3 rounded-full;
+    height: 8px;
+    border-radius: 4px;
+    border: 2px solid #9ca3af;
   }
 
   input[type="range"]::-moz-range-track {
-    @apply h-3 rounded-full;
+    height: 8px;
+    border-radius: 4px;
+    border: 2px solid #9ca3af;
   }
 
+  /* Thumb/knob styling - large and prominent */
   input[type="range"]::-webkit-slider-thumb {
-    @apply appearance-none w-6 h-6 rounded-full cursor-pointer bg-blue-600 shadow-lg hover:bg-blue-700 active:scale-110 transition-transform;
-    margin-top: -6px;
+    @apply appearance-none cursor-pointer;
+    width: 28px;
+    height: 28px;
+    border-radius: 50%;
+    background: #2563eb;
+    border: 4px solid white;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
+    margin-top: -12px;
+    transition: all 0.2s;
+  }
+
+  input[type="range"]::-webkit-slider-thumb:hover {
+    background: #1d4ed8;
+    transform: scale(1.15);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.4);
+  }
+
+  input[type="range"]::-webkit-slider-thumb:active {
+    transform: scale(1.25);
   }
 
   input[type="range"]::-moz-range-thumb {
-    @apply w-6 h-6 rounded-full cursor-pointer border-0 bg-blue-600 shadow-lg hover:bg-blue-700 active:scale-110 transition-transform;
+    @apply cursor-pointer;
+    width: 28px;
+    height: 28px;
+    border-radius: 50%;
+    background: #2563eb;
+    border: 4px solid white;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
+    transition: all 0.2s;
+  }
+
+  input[type="range"]::-moz-range-thumb:hover {
+    background: #1d4ed8;
+    transform: scale(1.15);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.4);
+  }
+
+  input[type="range"]::-moz-range-thumb:active {
+    transform: scale(1.25);
   }
 
   input[type="range"]:focus {
@@ -58,11 +99,11 @@
   }
 
   input[type="range"]:focus::-webkit-slider-thumb {
-    @apply ring-4 ring-blue-300 ring-offset-2;
+    @apply ring-4 ring-blue-400;
   }
 
   input[type="range"]:focus::-moz-range-thumb {
-    @apply ring-4 ring-blue-300 ring-offset-2;
+    @apply ring-4 ring-blue-400;
   }
 }
 

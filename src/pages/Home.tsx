@@ -158,13 +158,6 @@ export const Home: React.FC = () => {
         </div>
       </motion.div>
 
-      {/* Footer note */}
-      <div className="mt-12 text-center text-sm text-gray-500">
-        <p>
-          Built for learners from high school through graduate level.
-          No advanced math required – just curiosity!
-        </p>
-      </div>
     </div>
   );
 };
