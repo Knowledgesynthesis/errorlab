@@ -170,7 +170,7 @@ export const DistributionPlot: React.FC<DistributionPlotProps> = ({
           {criticalValues.map((cv, idx) => (
             <ReferenceLine
               key={`cv-${idx}`}
-              x={cv.toFixed(3)}
+              x={parseFloat(cv.toFixed(3))}
               stroke={COLORS.TYPE1}
               strokeWidth={2}
               strokeDasharray="3 3"
