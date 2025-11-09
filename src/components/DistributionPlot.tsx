@@ -20,6 +20,7 @@ interface DistributionPlotProps {
   derived: DerivedValues;
   sampleData?: SampleData;
   showH1?: boolean;
+  scenarioId?: string;
 }
 
 export const DistributionPlot: React.FC<DistributionPlotProps> = ({
@@ -27,6 +28,7 @@ export const DistributionPlot: React.FC<DistributionPlotProps> = ({
   derived,
   sampleData,
   showH1 = true,
+  scenarioId,
 }) => {
   const data = useMemo(() => {
     const { delta, sigma, n, testType } = state;
@@ -35,10 +37,24 @@ export const DistributionPlot: React.FC<DistributionPlotProps> = ({
     const se = getStandardError(sigma, n);
     const df = testType === 't-test' ? n - 1 : undefined;
 
-    // Determine x-axis range - compact to minimize wasted space
-    const maxRange = Math.max(3.0, Math.abs(delta / se) + 2);
-    const xMin = -maxRange;
-    const xMax = maxRange;
+    // Determine x-axis range based on scenario
+    let xMin: number;
+    let xMax: number;
+
+    // Set custom ranges for specific scenarios
+    if (scenarioId === 'medical' || scenarioId === 'ab-test') {
+      xMin = -4.2;
+      xMax = Math.max(4.2, Math.abs(delta / se) + 2);
+    } else if (scenarioId === 'quality-control') {
+      xMin = -4.4;
+      xMax = Math.max(4.4, Math.abs(delta / se) + 2);
+    } else {
+      // Default: compact to minimize wasted space
+      const maxRange = Math.max(3.0, Math.abs(delta / se) + 2);
+      xMin = -maxRange;
+      xMax = maxRange;
+    }
+
     const step = (xMax - xMin) / DISTRIBUTION_POINTS;
 
     const points = [];
@@ -73,7 +89,7 @@ export const DistributionPlot: React.FC<DistributionPlotProps> = ({
     }
 
     return points;
-  }, [state, derived]);
+  }, [state, derived, scenarioId]);
 
   const { criticalValues } = derived;
 

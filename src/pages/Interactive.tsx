@@ -110,6 +110,7 @@ export const Interactive: React.FC = () => {
             state={state}
             derived={derived}
             showH1={true}
+            scenarioId={currentScenario?.id}
           />
 
           <TwoByTwoCard

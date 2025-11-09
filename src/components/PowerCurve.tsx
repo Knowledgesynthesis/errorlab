@@ -24,7 +24,7 @@ export const PowerCurve: React.FC<PowerCurveProps> = ({ state }) => {
 
   const curveData = useMemo(() => {
     if (variable === 'n') {
-      return generatePowerCurve(state, 'n', 10, 1000, POWER_CURVE_POINTS);
+      return generatePowerCurve(state, 'n', 0, 1000, POWER_CURVE_POINTS);
     } else {
       return generatePowerCurve(state, 'delta', 0, 2, POWER_CURVE_POINTS);
     }
@@ -106,6 +106,7 @@ export const PowerCurve: React.FC<PowerCurveProps> = ({ state }) => {
             <CartesianGrid strokeDasharray="3 3" stroke="#e5e7eb" />
             <XAxis
               dataKey="x"
+              domain={variable === 'n' ? [0, 'auto'] : ['auto', 'auto']}
               label={{
                 value: variable === 'n' ? 'Sample Size (n)' : 'Effect Size (δ)',
                 position: 'insideBottom',

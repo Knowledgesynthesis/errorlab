@@ -92,6 +92,7 @@ export const Scenarios: React.FC = () => {
           state={selectedScenario.state}
           derived={derived}
           showH1={true}
+          scenarioId={selectedScenario.id}
         />
 
         <TwoByTwoCard
