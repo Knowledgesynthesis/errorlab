@@ -45,10 +45,13 @@ export const ControlPanel: React.FC<ControlPanelProps> = ({ state, onChange, onR
           step={RANGES.ALPHA.step}
           value={state.alpha}
           onChange={(e) => handleSliderChange('alpha', parseFloat(e.target.value))}
-          className="w-full h-2 bg-gray-200 rounded-lg appearance-none cursor-pointer accent-type1"
+          className="w-full bg-red-200 rounded-lg appearance-none cursor-pointer"
+          style={{
+            background: `linear-gradient(to right, #fecaca 0%, #ef4444 ${((state.alpha - RANGES.ALPHA.min) / (RANGES.ALPHA.max - RANGES.ALPHA.min)) * 100}%, #e5e7eb ${((state.alpha - RANGES.ALPHA.min) / (RANGES.ALPHA.max - RANGES.ALPHA.min)) * 100}%, #e5e7eb 100%)`
+          }}
           aria-label={`Significance level: ${state.alpha.toFixed(3)}`}
         />
-        <div className="flex justify-between text-xs text-gray-500">
+        <div className="flex justify-between text-xs text-gray-600 font-medium">
           <span>{RANGES.ALPHA.min}</span>
           <span>{RANGES.ALPHA.max}</span>
         </div>
@@ -70,10 +73,13 @@ export const ControlPanel: React.FC<ControlPanelProps> = ({ state, onChange, onR
           step={RANGES.N.step}
           value={state.n}
           onChange={(e) => handleSliderChange('n', parseInt(e.target.value))}
-          className="w-full h-2 bg-gray-200 rounded-lg appearance-none cursor-pointer accent-blue-600"
+          className="w-full bg-blue-200 rounded-lg appearance-none cursor-pointer"
+          style={{
+            background: `linear-gradient(to right, #bfdbfe 0%, #3b82f6 ${((state.n - RANGES.N.min) / (RANGES.N.max - RANGES.N.min)) * 100}%, #e5e7eb ${((state.n - RANGES.N.min) / (RANGES.N.max - RANGES.N.min)) * 100}%, #e5e7eb 100%)`
+          }}
           aria-label={`Sample size: ${state.n}`}
         />
-        <div className="flex justify-between text-xs text-gray-500">
+        <div className="flex justify-between text-xs text-gray-600 font-medium">
           <span>{RANGES.N.min}</span>
           <span>{RANGES.N.max}</span>
         </div>
@@ -98,10 +104,13 @@ export const ControlPanel: React.FC<ControlPanelProps> = ({ state, onChange, onR
           step={RANGES.DELTA.step}
           value={state.delta}
           onChange={(e) => handleSliderChange('delta', parseFloat(e.target.value))}
-          className="w-full h-2 bg-gray-200 rounded-lg appearance-none cursor-pointer accent-amber-500"
+          className="w-full bg-amber-200 rounded-lg appearance-none cursor-pointer"
+          style={{
+            background: `linear-gradient(to right, #fde68a 0%, #f59e0b ${((state.delta - RANGES.DELTA.min) / (RANGES.DELTA.max - RANGES.DELTA.min)) * 100}%, #e5e7eb ${((state.delta - RANGES.DELTA.min) / (RANGES.DELTA.max - RANGES.DELTA.min)) * 100}%, #e5e7eb 100%)`
+          }}
           aria-label={`Effect size: ${state.delta.toFixed(2)}`}
         />
-        <div className="flex justify-between text-xs text-gray-500">
+        <div className="flex justify-between text-xs text-gray-600 font-medium">
           <span>{RANGES.DELTA.min}</span>
           <span>{RANGES.DELTA.max}</span>
         </div>
@@ -123,10 +132,13 @@ export const ControlPanel: React.FC<ControlPanelProps> = ({ state, onChange, onR
           step={RANGES.SIGMA.step}
           value={state.sigma}
           onChange={(e) => handleSliderChange('sigma', parseFloat(e.target.value))}
-          className="w-full h-2 bg-gray-200 rounded-lg appearance-none cursor-pointer accent-gray-600"
+          className="w-full bg-gray-300 rounded-lg appearance-none cursor-pointer"
+          style={{
+            background: `linear-gradient(to right, #d1d5db 0%, #6b7280 ${((state.sigma - RANGES.SIGMA.min) / (RANGES.SIGMA.max - RANGES.SIGMA.min)) * 100}%, #e5e7eb ${((state.sigma - RANGES.SIGMA.min) / (RANGES.SIGMA.max - RANGES.SIGMA.min)) * 100}%, #e5e7eb 100%)`
+          }}
           aria-label={`Standard deviation: ${state.sigma.toFixed(2)}`}
         />
-        <div className="flex justify-between text-xs text-gray-500">
+        <div className="flex justify-between text-xs text-gray-600 font-medium">
           <span>{RANGES.SIGMA.min}</span>
           <span>{RANGES.SIGMA.max}</span>
         </div>
@@ -188,10 +200,13 @@ export const ControlPanel: React.FC<ControlPanelProps> = ({ state, onChange, onR
           step={RANGES.PREVALENCE.step}
           value={state.prevalence}
           onChange={(e) => handleSliderChange('prevalence', parseFloat(e.target.value))}
-          className="w-full h-2 bg-gray-200 rounded-lg appearance-none cursor-pointer accent-purple-600"
+          className="w-full bg-purple-200 rounded-lg appearance-none cursor-pointer"
+          style={{
+            background: `linear-gradient(to right, #e9d5ff 0%, #a855f7 ${((state.prevalence - RANGES.PREVALENCE.min) / (RANGES.PREVALENCE.max - RANGES.PREVALENCE.min)) * 100}%, #e5e7eb ${((state.prevalence - RANGES.PREVALENCE.min) / (RANGES.PREVALENCE.max - RANGES.PREVALENCE.min)) * 100}%, #e5e7eb 100%)`
+          }}
           aria-label={`Prevalence: ${(state.prevalence * 100).toFixed(0)}%`}
         />
-        <div className="flex justify-between text-xs text-gray-500">
+        <div className="flex justify-between text-xs text-gray-600 font-medium">
           <span>{(RANGES.PREVALENCE.min * 100).toFixed(0)}%</span>
           <span>{(RANGES.PREVALENCE.max * 100).toFixed(0)}%</span>
         </div>

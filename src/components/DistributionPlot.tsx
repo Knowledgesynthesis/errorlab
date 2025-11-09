@@ -36,22 +36,24 @@ export const DistributionPlot: React.FC<DistributionPlotProps> = ({
 
     const df = testType === 't-test' ? state.n - 1 : undefined;
 
-    // Determine x-axis range based on scenario
+    // Determine x-axis range - dynamic to show all relevant content
     let xMin: number;
     let xMax: number;
 
-    // Set custom ranges for specific scenarios
-    if (scenarioId === 'medical' || scenarioId === 'ab-test') {
-      xMin = -4.2;
-      xMax = 10;
-    } else if (scenarioId === 'quality-control') {
+    // Start from fixed points based on scenario
+    if (scenarioId === 'quality-control') {
       xMin = -4.4;
-      xMax = 10;
     } else {
-      // Default: also start at -4.2 and extend to 10
       xMin = -4.2;
-      xMax = 10;
     }
+
+    // Extend to show both H0 and H1 distributions plus margins
+    // H1 distribution is centered at ncp, so we need to show at least ncp + 3 standard deviations
+    const h1Center = ncp || 0;
+    const minXMax = 10; // Minimum extent as requested
+    const dynamicXMax = Math.max(minXMax, h1Center + 4, Math.abs(xMin)); // Extend to show H1 + margin
+
+    xMax = dynamicXMax;
 
     const step = (xMax - xMin) / DISTRIBUTION_POINTS;
 
