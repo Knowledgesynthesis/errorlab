@@ -76,6 +76,7 @@ export const Interactive: React.FC = () => {
             state={state}
             onChange={handleStateChange}
             onReset={handleReset}
+            showPrevalence={true}
           />
 
           {/* Key metrics */}
