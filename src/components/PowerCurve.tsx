@@ -30,6 +30,30 @@ export const PowerCurve: React.FC<PowerCurveProps> = ({ state }) => {
     }
   }, [state, variable]);
 
+  // Helper function to interpolate power at any x value
+  const getPowerAtValue = (x: number): number => {
+    // If x is exactly at a data point, return that power
+    const exactMatch = curveData.find((d) => Math.abs(d.x - x) < 0.001);
+    if (exactMatch) return exactMatch.power;
+
+    // Find the two closest points for interpolation
+    let lowerPoint = curveData[0];
+    let upperPoint = curveData[curveData.length - 1];
+
+    for (let i = 0; i < curveData.length - 1; i++) {
+      if (curveData[i].x <= x && curveData[i + 1].x >= x) {
+        lowerPoint = curveData[i];
+        upperPoint = curveData[i + 1];
+        break;
+      }
+    }
+
+    // Linear interpolation
+    if (lowerPoint.x === upperPoint.x) return lowerPoint.power;
+    const ratio = (x - lowerPoint.x) / (upperPoint.x - lowerPoint.x);
+    return lowerPoint.power + ratio * (upperPoint.power - lowerPoint.power);
+  };
+
   const handleSaveCurve = () => {
     const id = Date.now().toString();
     const label = variable === 'n'
@@ -223,14 +247,14 @@ export const PowerCurve: React.FC<PowerCurveProps> = ({ state }) => {
             <>
               <li><strong>Shape of curve:</strong> Power increases rapidly at first, then levels off - there are diminishing returns to adding more samples</li>
               <li><strong>Minimum sample size:</strong> Find where the curve crosses 80% power to see the minimum n needed for adequate power</li>
-              <li><strong>Current position:</strong> You're at n={currentValue}, giving {((curveData.find((d) => Math.abs(d.x - currentValue) < 0.5)?.power || 0) * 100).toFixed(1)}% power</li>
-              <li><strong>To reach 80% power:</strong> {((curveData.find((d) => Math.abs(d.x - currentValue) < 0.5)?.power || 0)) >= 0.8 ? 'You already have adequate power!' : 'Increase your sample size to where the curve crosses the orange line'}</li>
+              <li><strong>Current position:</strong> You're at n={currentValue}, giving {(getPowerAtValue(currentValue) * 100).toFixed(1)}% power</li>
+              <li><strong>To reach 80% power:</strong> {getPowerAtValue(currentValue) >= 0.8 ? 'You already have adequate power!' : 'Increase your sample size to where the curve crosses the orange line'}</li>
             </>
           ) : (
             <>
               <li><strong>Shape of curve:</strong> Power increases with larger effects - it's easier to detect big differences than small ones</li>
               <li><strong>Detectable effect size:</strong> Find where the curve crosses 80% power to see the minimum δ you can reliably detect</li>
-              <li><strong>Current position:</strong> You're at δ={currentValue.toFixed(2)}, giving {((curveData.find((d) => Math.abs(d.x - currentValue) < 0.5)?.power || 0) * 100).toFixed(1)}% power</li>
+              <li><strong>Current position:</strong> You're at δ={currentValue.toFixed(2)}, giving {(getPowerAtValue(currentValue) * 100).toFixed(1)}% power</li>
               <li><strong>Small effects:</strong> Notice how power drops dramatically for small effect sizes - detecting subtle differences requires large samples</li>
             </>
           )}
@@ -244,13 +268,13 @@ export const PowerCurve: React.FC<PowerCurveProps> = ({ state }) => {
             Current Power at {variable} = {currentValue}:
           </span>
           <span className="text-2xl font-bold" style={{ color: COLORS.POWER }}>
-            {(curveData.find((d) => Math.abs(d.x - currentValue) < 0.5)?.power || 0).toFixed(3)}
+            {getPowerAtValue(currentValue).toFixed(3)}
           </span>
         </div>
         <p className="text-xs text-gray-600 mt-2">
           {variable === 'n'
-            ? `With n=${currentValue}, you have a ${((curveData.find((d) => Math.abs(d.x - currentValue) < 0.5)?.power || 0) * 100).toFixed(1)}% chance of detecting the effect if it exists.`
-            : `With δ=${currentValue.toFixed(2)}, you have a ${((curveData.find((d) => Math.abs(d.x - currentValue) < 0.5)?.power || 0) * 100).toFixed(1)}% chance of detecting the effect if it exists.`}
+            ? `With n=${currentValue}, you have a ${(getPowerAtValue(currentValue) * 100).toFixed(1)}% chance of detecting the effect if it exists.`
+            : `With δ=${currentValue.toFixed(2)}, you have a ${(getPowerAtValue(currentValue) * 100).toFixed(1)}% chance of detecting the effect if it exists.`}
         </p>
       </div>
 

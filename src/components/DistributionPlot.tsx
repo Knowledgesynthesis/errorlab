@@ -28,39 +28,36 @@ export const DistributionPlot: React.FC<DistributionPlotProps> = ({
   derived,
   sampleData,
   showH1 = true,
-  scenarioId,
 }) => {
   // Calculate the axis range separately so we can use it for both data generation and domain
   const axisRange = useMemo(() => {
     const { ncp } = derived;
 
     // Determine x-axis range - dynamic to show all relevant content
-    let xMin: number;
-    let xMax: number;
-
-    // Start from fixed points based on scenario
-    if (scenarioId === 'quality-control') {
-      xMin = -4.4;
-    } else {
-      xMin = -4.2;
-    }
-
-    // Extend to show both H0 and H1 distributions plus margins
     const h1Center = ncp || 0;
-    const minXMax = 10;
-    let dynamicXMax = Math.max(minXMax, h1Center + 4, Math.abs(xMin));
+    const margin = 4; // Standard deviations to show on each side
+
+    // Start with showing H₀ (centered at 0) and H₁ (centered at ncp)
+    // We want to show at least ±4 standard deviations from each center
+    let xMin = Math.min(-margin, h1Center - margin);
+    let xMax = Math.max(margin, h1Center + margin);
 
     // IMPORTANT: Extend range to include the observed test statistic if it exists
     if (sampleData) {
       const testStat = sampleData.testStatistic;
       xMin = Math.min(xMin, testStat - 1);
-      dynamicXMax = Math.max(dynamicXMax, testStat + 1);
+      xMax = Math.max(xMax, testStat + 1);
     }
 
-    xMax = dynamicXMax;
+    // Ensure some minimum range
+    if (xMax - xMin < 8) {
+      const center = (xMin + xMax) / 2;
+      xMin = center - 4;
+      xMax = center + 4;
+    }
 
     return { xMin, xMax };
-  }, [derived, scenarioId, sampleData]);
+  }, [derived, sampleData]);
 
   const data = useMemo(() => {
     const { testType } = state;
