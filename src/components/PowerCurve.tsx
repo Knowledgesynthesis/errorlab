@@ -70,13 +70,13 @@ export const PowerCurve: React.FC<PowerCurveProps> = ({ state }) => {
   const currentValue = variable === 'n' ? state.n : state.delta;
 
   return (
-    <div className="bg-white rounded-lg shadow-md p-4">
-      <div className="flex justify-between items-center mb-1">
-        <h3 className="text-xl font-bold text-gray-800">Power Analysis</h3>
+    <div className="bg-white rounded-lg shadow-md p-2 sm:p-4">
+      <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-2 mb-1">
+        <h3 className="text-lg sm:text-xl font-bold text-gray-800">Power Analysis</h3>
         <div className="flex gap-2">
           <button
             onClick={handleSaveCurve}
-            className="px-3 py-1 bg-green-600 hover:bg-green-700 text-white text-sm rounded-md font-medium transition-colors"
+            className="px-2 sm:px-3 py-1 bg-green-600 hover:bg-green-700 text-white text-xs sm:text-sm rounded-md font-medium transition-colors"
             aria-label="Save current curve"
           >
             Save Curve
@@ -84,7 +84,7 @@ export const PowerCurve: React.FC<PowerCurveProps> = ({ state }) => {
           {savedCurves.length > 0 && (
             <button
               onClick={handleClearCurves}
-              className="px-3 py-1 bg-gray-300 hover:bg-gray-400 text-gray-800 text-sm rounded-md font-medium transition-colors"
+              className="px-2 sm:px-3 py-1 bg-gray-300 hover:bg-gray-400 text-gray-800 text-xs sm:text-sm rounded-md font-medium transition-colors"
               aria-label="Clear saved curves"
             >
               Clear All
@@ -94,11 +94,11 @@ export const PowerCurve: React.FC<PowerCurveProps> = ({ state }) => {
       </div>
 
       <div className="mb-1">
-        <label className="text-sm font-medium text-gray-700 mr-3">Plot power vs:</label>
-        <div className="inline-flex gap-2">
+        <label className="text-xs sm:text-sm font-medium text-gray-700 mr-2 block sm:inline mb-1 sm:mb-0">Plot power vs:</label>
+        <div className="flex gap-2">
           <button
             onClick={() => setVariable('n')}
-            className={`px-4 py-2 rounded-md font-medium text-sm transition-colors ${
+            className={`px-2 sm:px-4 py-1 sm:py-2 rounded-md font-medium text-xs sm:text-sm transition-colors ${
               variable === 'n'
                 ? 'bg-blue-600 text-white'
                 : 'bg-gray-200 text-gray-700 hover:bg-gray-300'
@@ -109,7 +109,7 @@ export const PowerCurve: React.FC<PowerCurveProps> = ({ state }) => {
           </button>
           <button
             onClick={() => setVariable('delta')}
-            className={`px-4 py-2 rounded-md font-medium text-sm transition-colors ${
+            className={`px-2 sm:px-4 py-1 sm:py-2 rounded-md font-medium text-xs sm:text-sm transition-colors ${
               variable === 'delta'
                 ? 'bg-blue-600 text-white'
                 : 'bg-gray-200 text-gray-700 hover:bg-gray-300'
@@ -121,11 +121,11 @@ export const PowerCurve: React.FC<PowerCurveProps> = ({ state }) => {
         </div>
       </div>
 
-      <div className="w-full" style={{ height: '400px' }}>
+      <div className="w-full h-[280px] sm:h-[400px]">
         <ResponsiveContainer width="100%" height="100%">
           <LineChart
             data={curveData}
-            margin={{ top: 20, right: 30, left: 20, bottom: 20 }}
+            margin={{ top: 5, right: 5, left: -5, bottom: 5 }}
           >
             <CartesianGrid strokeDasharray="3 3" stroke="#e5e7eb" />
             <XAxis
@@ -135,27 +135,37 @@ export const PowerCurve: React.FC<PowerCurveProps> = ({ state }) => {
               label={{
                 value: variable === 'n' ? 'Sample Size (n)' : 'Effect Size (δ)',
                 position: 'insideBottom',
-                offset: -10,
+                offset: -5,
+                style: { fontSize: '10px' }
               }}
               stroke="#6b7280"
+              tick={{ fontSize: 9 }}
             />
             <YAxis
               domain={[0, 1]}
-              label={{ value: 'Power (1 - β)', angle: -90, position: 'insideLeft' }}
+              label={{
+                value: 'Power (1 - β)',
+                angle: -90,
+                position: 'insideLeft',
+                style: { fontSize: '10px' }
+              }}
               stroke="#6b7280"
+              tick={{ fontSize: 9 }}
             />
             <Tooltip
               contentStyle={{
                 backgroundColor: 'rgba(255, 255, 255, 0.95)',
                 border: '1px solid #d1d5db',
                 borderRadius: '0.375rem',
+                fontSize: '11px'
               }}
               formatter={(value: number) => value.toFixed(3)}
             />
             <Legend
               verticalAlign="top"
-              height={36}
-              wrapperStyle={{ paddingBottom: '20px' }}
+              height={28}
+              wrapperStyle={{ paddingBottom: '10px', fontSize: '11px' }}
+              iconSize={10}
             />
 
             {/* Current curve */}
@@ -173,13 +183,13 @@ export const PowerCurve: React.FC<PowerCurveProps> = ({ state }) => {
             <ReferenceLine
               x={currentValue}
               stroke="#8b5cf6"
-              strokeWidth={2}
+              strokeWidth={1.5}
               strokeDasharray="3 3"
               label={{
                 value: `Current: ${currentValue}`,
                 position: 'top',
                 fill: '#8b5cf6',
-                fontSize: 11,
+                fontSize: 9,
               }}
             />
 
@@ -192,7 +202,7 @@ export const PowerCurve: React.FC<PowerCurveProps> = ({ state }) => {
                 value: '80% power',
                 position: 'right',
                 fill: '#f59e0b',
-                fontSize: 10,
+                fontSize: 9,
               }}
             />
             <ReferenceLine
@@ -203,7 +213,7 @@ export const PowerCurve: React.FC<PowerCurveProps> = ({ state }) => {
                 value: '90% power',
                 position: 'right',
                 fill: '#10b981',
-                fontSize: 10,
+                fontSize: 9,
               }}
             />
 

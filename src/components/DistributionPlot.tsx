@@ -105,42 +105,56 @@ export const DistributionPlot: React.FC<DistributionPlotProps> = ({
   const { criticalValues } = derived;
 
   return (
-    <div className="bg-white rounded-lg shadow-md p-4">
-      <h3 className="text-xl font-bold text-gray-800 mb-2">
+    <div className="bg-white rounded-lg shadow-md p-2 sm:p-4">
+      <h3 className="text-lg sm:text-xl font-bold text-gray-800 mb-1 sm:mb-2">
         Sampling Distributions
       </h3>
 
-      <div className="w-full" style={{ height: '400px' }}>
+      <div className="w-full h-[280px] sm:h-[400px]">
         <ResponsiveContainer width="100%" height="100%">
           <ComposedChart
             data={data}
-            margin={{ top: 20, right: 20, left: 0, bottom: 20 }}
+            margin={{ top: 5, right: 5, left: -10, bottom: 5 }}
           >
           <CartesianGrid strokeDasharray="3 3" stroke="#e5e7eb" />
           <XAxis
             dataKey="x"
             domain={[axisRange.xMin, axisRange.xMax]}
             type="number"
-            label={{ value: 'Test Statistic', position: 'insideBottom', offset: -10 }}
+            label={{
+              value: 'Test Statistic',
+              position: 'insideBottom',
+              offset: -5,
+              style: { fontSize: '10px' }
+            }}
             stroke="#6b7280"
+            tick={{ fontSize: 9 }}
           />
           <YAxis
-            width={40}
-            label={{ value: 'Probability Density', angle: -90, position: 'insideLeft' }}
+            width={35}
+            label={{
+              value: 'Probability Density',
+              angle: -90,
+              position: 'insideLeft',
+              style: { fontSize: '10px' }
+            }}
             stroke="#6b7280"
+            tick={{ fontSize: 9 }}
           />
           <Tooltip
             contentStyle={{
               backgroundColor: 'rgba(255, 255, 255, 0.95)',
               border: '1px solid #d1d5db',
               borderRadius: '0.375rem',
+              fontSize: '11px'
             }}
             formatter={(value: number) => value.toFixed(4)}
           />
           <Legend
             verticalAlign="top"
-            height={36}
-            wrapperStyle={{ paddingBottom: '20px' }}
+            height={28}
+            wrapperStyle={{ paddingBottom: '10px', fontSize: '11px' }}
+            iconSize={10}
           />
 
           {/* Shaded rejection region - only shows where we reject H0 */}
@@ -185,13 +199,13 @@ export const DistributionPlot: React.FC<DistributionPlotProps> = ({
               key={`cv-${idx}`}
               x={parseFloat(cv.toFixed(3))}
               stroke={COLORS.TYPE1}
-              strokeWidth={2}
+              strokeWidth={1.5}
               strokeDasharray="3 3"
               label={{
                 value: `CV: ${cv.toFixed(2)}`,
                 position: 'top',
                 fill: COLORS.TYPE1,
-                fontSize: 12,
+                fontSize: 10,
               }}
             />
           ))}
@@ -201,12 +215,12 @@ export const DistributionPlot: React.FC<DistributionPlotProps> = ({
             <ReferenceLine
               x={parseFloat(sampleData.testStatistic.toFixed(3))}
               stroke="#8b5cf6"
-              strokeWidth={3}
+              strokeWidth={2}
               label={{
                 value: `Observed: ${sampleData.testStatistic.toFixed(2)}`,
                 position: 'top',
                 fill: '#8b5cf6',
-                fontSize: 12,
+                fontSize: 10,
               }}
               name="Observed Test Statistic"
             />
