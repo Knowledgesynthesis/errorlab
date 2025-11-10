@@ -29,11 +29,11 @@ export const PValueExplorer: React.FC<PValueExplorerProps> = ({ state, onSeedCha
 
   return (
     <div className="space-y-2">
-      <div className="bg-white rounded-lg shadow-md p-4">
-        <h3 className="text-xl font-bold text-gray-800 mb-1">p-value Explorer</h3>
+      <div className="bg-white rounded-lg shadow-md p-2 sm:p-4">
+        <h3 className="text-lg sm:text-xl font-bold text-gray-800 mb-1">p-value Explorer</h3>
 
         <div className="mb-2">
-          <p className="text-sm text-gray-700 mb-2">
+          <p className="text-xs sm:text-sm text-gray-700 mb-2">
             Generate a random sample and see where the test statistic falls on the H₀ distribution.
             The p-value is the probability (under H₀) of getting a result at least as extreme.
           </p>
@@ -41,24 +41,24 @@ export const PValueExplorer: React.FC<PValueExplorerProps> = ({ state, onSeedCha
           <div className="flex flex-wrap gap-2">
             <button
               onClick={() => handleGenerateSample(false)}
-              className="px-4 py-2 bg-blue-600 hover:bg-blue-700 text-white rounded-md font-medium transition-colors"
+              className="px-2 sm:px-4 py-1 sm:py-2 bg-blue-600 hover:bg-blue-700 text-white text-xs sm:text-sm rounded-md font-medium transition-colors"
               aria-label="Generate sample from H0"
             >
-              Generate Sample from H₀
+              Generate from H₀
             </button>
             <button
               onClick={() => handleGenerateSample(true)}
-              className="px-4 py-2 bg-amber-600 hover:bg-amber-700 text-white rounded-md font-medium transition-colors"
+              className="px-2 sm:px-4 py-1 sm:py-2 bg-amber-600 hover:bg-amber-700 text-white text-xs sm:text-sm rounded-md font-medium transition-colors"
               aria-label="Generate sample from H1"
             >
-              Generate Sample from H₁
+              Generate from H₁
             </button>
             <button
               onClick={handleNewSeed}
-              className="px-4 py-2 bg-gray-300 hover:bg-gray-400 text-gray-800 rounded-md font-medium transition-colors"
+              className="px-2 sm:px-4 py-1 sm:py-2 bg-gray-300 hover:bg-gray-400 text-gray-800 text-xs sm:text-sm rounded-md font-medium transition-colors"
               aria-label="Change random seed"
             >
-              New Random Seed
+              New Seed
             </button>
           </div>
         </div>
@@ -66,9 +66,9 @@ export const PValueExplorer: React.FC<PValueExplorerProps> = ({ state, onSeedCha
         {sampleData && (
           <div className="space-y-2">
             <div className="grid grid-cols-1 md:grid-cols-3 gap-2">
-              <div className="p-4 bg-gray-50 rounded-md border border-gray-200">
+              <div className="p-2 sm:p-4 bg-gray-50 rounded-md border border-gray-200">
                 <div className="text-xs text-gray-600 mb-1">Sample Mean</div>
-                <div className="text-2xl font-bold text-gray-800">
+                <div className="text-xl sm:text-2xl font-bold text-gray-800">
                   {sampleData.mean.toFixed(3)}
                 </div>
                 <div className="text-xs text-gray-500 mt-1">
@@ -76,9 +76,9 @@ export const PValueExplorer: React.FC<PValueExplorerProps> = ({ state, onSeedCha
                 </div>
               </div>
 
-              <div className="p-4 bg-gray-50 rounded-md border border-gray-200">
+              <div className="p-2 sm:p-4 bg-gray-50 rounded-md border border-gray-200">
                 <div className="text-xs text-gray-600 mb-1">Test Statistic</div>
-                <div className="text-2xl font-bold text-gray-800">
+                <div className="text-xl sm:text-2xl font-bold text-gray-800">
                   {sampleData.testStatistic.toFixed(3)}
                 </div>
                 <div className="text-xs text-gray-500 mt-1">
@@ -86,9 +86,9 @@ export const PValueExplorer: React.FC<PValueExplorerProps> = ({ state, onSeedCha
                 </div>
               </div>
 
-              <div className="p-4 bg-purple-50 rounded-md border border-purple-200">
+              <div className="p-2 sm:p-4 bg-purple-50 rounded-md border border-purple-200">
                 <div className="text-xs text-gray-600 mb-1">p-value</div>
-                <div className="text-2xl font-bold text-purple-700">
+                <div className="text-xl sm:text-2xl font-bold text-purple-700">
                   {sampleData.pValue.toFixed(4)}
                 </div>
                 <div className="text-xs text-gray-500 mt-1">
@@ -97,12 +97,12 @@ export const PValueExplorer: React.FC<PValueExplorerProps> = ({ state, onSeedCha
               </div>
             </div>
 
-            <div className={`p-4 rounded-md border ${
+            <div className={`p-2 sm:p-4 rounded-md border ${
               sampleData.decision === 'reject'
                 ? 'bg-red-50 border-red-200'
                 : 'bg-blue-50 border-blue-200'
             }`}>
-              <p className="text-sm font-semibold mb-2">
+              <p className="text-xs sm:text-sm font-semibold mb-2">
                 Decision: {sampleData.decision === 'reject' ? 'Reject H₀' : 'Fail to Reject H₀'}
               </p>
               <p className="text-xs text-gray-700">
@@ -123,7 +123,7 @@ export const PValueExplorer: React.FC<PValueExplorerProps> = ({ state, onSeedCha
             </div>
 
             {/* Common misconception callout */}
-            <div className="p-4 bg-yellow-50 rounded-md border border-yellow-200">
+            <div className="p-2 sm:p-4 bg-yellow-50 rounded-md border border-yellow-200">
               <p className="text-xs text-yellow-900 leading-relaxed">
                 <strong>Important:</strong> The p-value of {sampleData.pValue.toFixed(4)} does NOT mean
                 there is a {(sampleData.pValue * 100).toFixed(2)}% chance that H₀ is true.
@@ -134,7 +134,7 @@ export const PValueExplorer: React.FC<PValueExplorerProps> = ({ state, onSeedCha
 
             {/* Explanation for H1 sampling */}
             {underH1 && sampleData.pValue < 0.001 && (
-              <div className="p-4 bg-green-50 rounded-md border border-green-200">
+              <div className="p-2 sm:p-4 bg-green-50 rounded-md border border-green-200">
                 <p className="text-xs text-green-900 leading-relaxed">
                   <strong>Why is the p-value so small?</strong> You generated data from H₁ (where an effect exists).
                   When H₁ is true with a reasonable effect size and sample size, you'll almost always get very small p-values.

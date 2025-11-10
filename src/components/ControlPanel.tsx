@@ -6,9 +6,15 @@ interface ControlPanelProps {
   state: ExperimentState;
   onChange: (updates: Partial<ExperimentState>) => void;
   onReset: () => void;
+  showPrevalence?: boolean; // Only show prevalence slider when 2×2 table is used
 }
 
-export const ControlPanel: React.FC<ControlPanelProps> = ({ state, onChange, onReset }) => {
+export const ControlPanel: React.FC<ControlPanelProps> = ({
+  state,
+  onChange,
+  onReset,
+  showPrevalence = false
+}) => {
   const handleSliderChange = (key: keyof ExperimentState, value: number) => {
     onChange({ [key]: value });
   };
@@ -180,37 +186,39 @@ export const ControlPanel: React.FC<ControlPanelProps> = ({ state, onChange, onR
       </div>
 
       {/* Prevalence slider for 2x2 table */}
-      <div className="space-y-2 pt-4 border-t border-gray-200">
-        <div className="flex justify-between items-center">
-          <label htmlFor="prevalence-slider" className="text-sm font-medium text-gray-700">
-            Prevalence
-            <span className="ml-2 text-xs text-gray-500" title="Prior probability that H₁ is true">
-              P(H₁ true)
+      {showPrevalence && (
+        <div className="space-y-2 pt-4 border-t border-gray-200">
+          <div className="flex justify-between items-center">
+            <label htmlFor="prevalence-slider" className="text-sm font-medium text-gray-700">
+              Prevalence
+              <span className="ml-2 text-xs text-gray-500" title="Prior probability that H₁ is true">
+                P(H₁ true)
+              </span>
+            </label>
+            <span className="text-sm font-semibold text-gray-900">
+              {(state.prevalence * 100).toFixed(0)}%
             </span>
-          </label>
-          <span className="text-sm font-semibold text-gray-900">
-            {(state.prevalence * 100).toFixed(0)}%
-          </span>
+          </div>
+          <input
+            id="prevalence-slider"
+            type="range"
+            min={RANGES.PREVALENCE.min}
+            max={RANGES.PREVALENCE.max}
+            step={RANGES.PREVALENCE.step}
+            value={state.prevalence}
+            onChange={(e) => handleSliderChange('prevalence', parseFloat(e.target.value))}
+            className="w-full bg-purple-200 rounded-lg appearance-none cursor-pointer"
+            style={{
+              background: `linear-gradient(to right, #e9d5ff 0%, #a855f7 ${((state.prevalence - RANGES.PREVALENCE.min) / (RANGES.PREVALENCE.max - RANGES.PREVALENCE.min)) * 100}%, #e5e7eb ${((state.prevalence - RANGES.PREVALENCE.min) / (RANGES.PREVALENCE.max - RANGES.PREVALENCE.min)) * 100}%, #e5e7eb 100%)`
+            }}
+            aria-label={`Prevalence: ${(state.prevalence * 100).toFixed(0)}%`}
+          />
+          <div className="flex justify-between text-xs text-gray-600 font-medium">
+            <span>{(RANGES.PREVALENCE.min * 100).toFixed(0)}%</span>
+            <span>{(RANGES.PREVALENCE.max * 100).toFixed(0)}%</span>
+          </div>
         </div>
-        <input
-          id="prevalence-slider"
-          type="range"
-          min={RANGES.PREVALENCE.min}
-          max={RANGES.PREVALENCE.max}
-          step={RANGES.PREVALENCE.step}
-          value={state.prevalence}
-          onChange={(e) => handleSliderChange('prevalence', parseFloat(e.target.value))}
-          className="w-full bg-purple-200 rounded-lg appearance-none cursor-pointer"
-          style={{
-            background: `linear-gradient(to right, #e9d5ff 0%, #a855f7 ${((state.prevalence - RANGES.PREVALENCE.min) / (RANGES.PREVALENCE.max - RANGES.PREVALENCE.min)) * 100}%, #e5e7eb ${((state.prevalence - RANGES.PREVALENCE.min) / (RANGES.PREVALENCE.max - RANGES.PREVALENCE.min)) * 100}%, #e5e7eb 100%)`
-          }}
-          aria-label={`Prevalence: ${(state.prevalence * 100).toFixed(0)}%`}
-        />
-        <div className="flex justify-between text-xs text-gray-600 font-medium">
-          <span>{(RANGES.PREVALENCE.min * 100).toFixed(0)}%</span>
-          <span>{(RANGES.PREVALENCE.max * 100).toFixed(0)}%</span>
-        </div>
-      </div>
+      )}
 
       {/* Info callouts */}
       <div className="mt-2 p-2 bg-blue-50 rounded-md border border-blue-200">

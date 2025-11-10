@@ -10,56 +10,69 @@ import { scenarios } from '../utils/scenarios';
 const quizQuestions: QuizQuestion[] = [
   {
     id: 'q1',
-    question: 'In medical screening, what does a Type I error represent?',
+    question: 'In the antihypertensive drug trial, what does a Type I error represent?',
     type: 'multiple-choice',
     options: [
-      'Telling a healthy person they have the disease',
-      'Telling a sick person they are healthy',
-      'Correctly diagnosing a sick person',
-      'Correctly diagnosing a healthy person',
+      'Approving an ineffective drug that doesn\'t actually lower blood pressure',
+      'Rejecting an effective drug that actually lowers blood pressure',
+      'Correctly approving a drug that lowers blood pressure',
+      'Correctly rejecting a drug that doesn\'t work',
     ],
-    correctAnswer: 'Telling a healthy person they have the disease',
-    explanation: 'A Type I error occurs when we reject H₀ (person is healthy) when it is actually true. This is a false positive.',
+    correctAnswer: 'Approving an ineffective drug that doesn\'t actually lower blood pressure',
+    explanation: 'A Type I error occurs when we reject H₀ (drug has no effect) when it is actually true. This means approving a drug that doesn\'t actually work, giving patients false hope and potential side effects without benefit.',
   },
   {
     id: 'q2',
-    question: 'In an A/B test, if we set α = 0.01 instead of α = 0.05, what happens?',
+    question: 'For the osteoporosis treatment study, if we set α = 0.01 instead of α = 0.05, what happens?',
     type: 'multiple-choice',
     options: [
-      'We decrease Type I errors but increase Type II errors',
+      'We decrease Type I errors (approving ineffective treatments) but increase Type II errors (missing effective treatments)',
       'We decrease both Type I and Type II errors',
       'We increase both Type I and Type II errors',
       'We increase Type I errors but decrease Type II errors',
     ],
-    correctAnswer: 'We decrease Type I errors but increase Type II errors',
-    explanation: 'Reducing α makes us more conservative about rejecting H₀, which reduces false positives (Type I) but makes it harder to detect real effects, increasing false negatives (Type II).',
-    hint: 'Think about the tradeoff between the two types of errors',
+    correctAnswer: 'We decrease Type I errors (approving ineffective treatments) but increase Type II errors (missing effective treatments)',
+    explanation: 'Reducing α makes us more conservative about rejecting H₀, which reduces false approvals of ineffective treatments (Type I) but makes it harder to detect truly effective treatments, increasing missed opportunities (Type II).',
+    hint: 'Think about the tradeoff between approving bad treatments vs. missing good ones',
   },
   {
     id: 'q3',
-    question: 'If a quality control test has 80% power, what does this mean?',
+    question: 'If the drug formulation bioequivalence study has 80% power, what does this mean?',
     type: 'multiple-choice',
     options: [
-      'There is an 80% chance of detecting a defect when it exists',
+      'There is an 80% chance of detecting a real difference in blood levels when it exists',
       'There is an 80% chance the null hypothesis is true',
       'There is an 80% chance of no Type I errors',
       'There is a 20% chance of Type I error',
     ],
-    correctAnswer: 'There is an 80% chance of detecting a defect when it exists',
-    explanation: 'Power = 1 - β is the probability of correctly rejecting H₀ when H₁ is true. 80% power means we will detect the defect 80% of the time when it truly exists.',
+    correctAnswer: 'There is an 80% chance of detecting a real difference in blood levels when it exists',
+    explanation: 'Power = 1 - β is the probability of correctly rejecting H₀ when H₁ is true. 80% power means we will detect a true difference in blood levels 80% of the time when it actually exists, preventing potentially unsafe medications from reaching patients.',
   },
   {
     id: 'q4',
-    question: 'Which change would INCREASE statistical power?',
+    question: 'For the antihypertensive drug trial, which change would INCREASE our ability to detect if the drug actually works?',
     type: 'multiple-choice',
     options: [
-      'Increasing sample size',
-      'Decreasing alpha (α)',
-      'Decreasing effect size',
-      'Increasing variance',
+      'Increasing sample size (testing more patients)',
+      'Decreasing alpha (α) to be more conservative',
+      'Using patients with less variable blood pressure (smaller σ)',
+      'Both A and C',
     ],
-    correctAnswer: 'Increasing sample size',
-    explanation: 'Increasing sample size increases power by making our estimates more precise. Decreasing α, effect size, or increasing variance all decrease power.',
+    correctAnswer: 'Both A and C',
+    explanation: 'Increasing sample size increases power by providing more data. Using patients with less variable blood pressure (smaller σ) also increases power by reducing noise. Decreasing α would actually decrease power by making it harder to reject H₀.',
+  },
+  {
+    id: 'q5',
+    question: 'Why do we use a one-sided test for the blood pressure drug but a two-sided test for the formulation study?',
+    type: 'multiple-choice',
+    options: [
+      'Blood pressure: we only care if it decreases. Formulation: any change (increase or decrease) in blood levels could be dangerous',
+      'Blood pressure drugs always use one-sided tests by regulation',
+      'Two-sided tests are more powerful for formulation studies',
+      'One-sided tests are easier to calculate',
+    ],
+    correctAnswer: 'Blood pressure: we only care if it decreases. Formulation: any change (increase or decrease) in blood levels could be dangerous',
+    explanation: 'For the antihypertensive drug, we use H₁: μ < μ₀ (one-sided left) because only a decrease in blood pressure is beneficial. For bioequivalence, we use H₁: μ ≠ μ₀ (two-sided) because both increases and decreases in blood levels could affect efficacy or safety.',
   },
 ];
 
@@ -76,7 +89,7 @@ export const Scenarios: React.FC = () => {
           Real-World Scenarios
         </h1>
         <p className="text-gray-600">
-          See hypothesis testing concepts in medical testing, A/B tests, and quality control
+          Explore hypothesis testing through real pharmaceutical and clinical trial scenarios
         </p>
       </div>
 

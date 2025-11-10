@@ -30,6 +30,30 @@ export const PowerCurve: React.FC<PowerCurveProps> = ({ state }) => {
     }
   }, [state, variable]);
 
+  // Helper function to interpolate power at any x value
+  const getPowerAtValue = (x: number): number => {
+    // If x is exactly at a data point, return that power
+    const exactMatch = curveData.find((d) => Math.abs(d.x - x) < 0.001);
+    if (exactMatch) return exactMatch.power;
+
+    // Find the two closest points for interpolation
+    let lowerPoint = curveData[0];
+    let upperPoint = curveData[curveData.length - 1];
+
+    for (let i = 0; i < curveData.length - 1; i++) {
+      if (curveData[i].x <= x && curveData[i + 1].x >= x) {
+        lowerPoint = curveData[i];
+        upperPoint = curveData[i + 1];
+        break;
+      }
+    }
+
+    // Linear interpolation
+    if (lowerPoint.x === upperPoint.x) return lowerPoint.power;
+    const ratio = (x - lowerPoint.x) / (upperPoint.x - lowerPoint.x);
+    return lowerPoint.power + ratio * (upperPoint.power - lowerPoint.power);
+  };
+
   const handleSaveCurve = () => {
     const id = Date.now().toString();
     const label = variable === 'n'
@@ -46,13 +70,13 @@ export const PowerCurve: React.FC<PowerCurveProps> = ({ state }) => {
   const currentValue = variable === 'n' ? state.n : state.delta;
 
   return (
-    <div className="bg-white rounded-lg shadow-md p-4">
-      <div className="flex justify-between items-center mb-1">
-        <h3 className="text-xl font-bold text-gray-800">Power Analysis</h3>
+    <div className="bg-white rounded-lg shadow-md p-2 sm:p-4">
+      <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-2 mb-1">
+        <h3 className="text-lg sm:text-xl font-bold text-gray-800">Power Analysis</h3>
         <div className="flex gap-2">
           <button
             onClick={handleSaveCurve}
-            className="px-3 py-1 bg-green-600 hover:bg-green-700 text-white text-sm rounded-md font-medium transition-colors"
+            className="px-2 sm:px-3 py-1 bg-green-600 hover:bg-green-700 text-white text-xs sm:text-sm rounded-md font-medium transition-colors"
             aria-label="Save current curve"
           >
             Save Curve
@@ -60,7 +84,7 @@ export const PowerCurve: React.FC<PowerCurveProps> = ({ state }) => {
           {savedCurves.length > 0 && (
             <button
               onClick={handleClearCurves}
-              className="px-3 py-1 bg-gray-300 hover:bg-gray-400 text-gray-800 text-sm rounded-md font-medium transition-colors"
+              className="px-2 sm:px-3 py-1 bg-gray-300 hover:bg-gray-400 text-gray-800 text-xs sm:text-sm rounded-md font-medium transition-colors"
               aria-label="Clear saved curves"
             >
               Clear All
@@ -70,11 +94,11 @@ export const PowerCurve: React.FC<PowerCurveProps> = ({ state }) => {
       </div>
 
       <div className="mb-1">
-        <label className="text-sm font-medium text-gray-700 mr-3">Plot power vs:</label>
-        <div className="inline-flex gap-2">
+        <label className="text-xs sm:text-sm font-medium text-gray-700 mr-2 block sm:inline mb-1 sm:mb-0">Plot power vs:</label>
+        <div className="flex gap-2">
           <button
             onClick={() => setVariable('n')}
-            className={`px-4 py-2 rounded-md font-medium text-sm transition-colors ${
+            className={`px-2 sm:px-4 py-1 sm:py-2 rounded-md font-medium text-xs sm:text-sm transition-colors ${
               variable === 'n'
                 ? 'bg-blue-600 text-white'
                 : 'bg-gray-200 text-gray-700 hover:bg-gray-300'
@@ -85,7 +109,7 @@ export const PowerCurve: React.FC<PowerCurveProps> = ({ state }) => {
           </button>
           <button
             onClick={() => setVariable('delta')}
-            className={`px-4 py-2 rounded-md font-medium text-sm transition-colors ${
+            className={`px-2 sm:px-4 py-1 sm:py-2 rounded-md font-medium text-xs sm:text-sm transition-colors ${
               variable === 'delta'
                 ? 'bg-blue-600 text-white'
                 : 'bg-gray-200 text-gray-700 hover:bg-gray-300'
@@ -97,11 +121,11 @@ export const PowerCurve: React.FC<PowerCurveProps> = ({ state }) => {
         </div>
       </div>
 
-      <div className="w-full" style={{ height: '400px' }}>
+      <div className="w-full h-[280px] sm:h-[400px]">
         <ResponsiveContainer width="100%" height="100%">
           <LineChart
             data={curveData}
-            margin={{ top: 20, right: 30, left: 20, bottom: 20 }}
+            margin={{ top: 5, right: 5, left: -5, bottom: 5 }}
           >
             <CartesianGrid strokeDasharray="3 3" stroke="#e5e7eb" />
             <XAxis
@@ -111,27 +135,37 @@ export const PowerCurve: React.FC<PowerCurveProps> = ({ state }) => {
               label={{
                 value: variable === 'n' ? 'Sample Size (n)' : 'Effect Size (δ)',
                 position: 'insideBottom',
-                offset: -10,
+                offset: -5,
+                style: { fontSize: '10px' }
               }}
               stroke="#6b7280"
+              tick={{ fontSize: 9 }}
             />
             <YAxis
               domain={[0, 1]}
-              label={{ value: 'Power (1 - β)', angle: -90, position: 'insideLeft' }}
+              label={{
+                value: 'Power (1 - β)',
+                angle: -90,
+                position: 'insideLeft',
+                style: { fontSize: '10px' }
+              }}
               stroke="#6b7280"
+              tick={{ fontSize: 9 }}
             />
             <Tooltip
               contentStyle={{
                 backgroundColor: 'rgba(255, 255, 255, 0.95)',
                 border: '1px solid #d1d5db',
                 borderRadius: '0.375rem',
+                fontSize: '11px'
               }}
               formatter={(value: number) => value.toFixed(3)}
             />
             <Legend
               verticalAlign="top"
-              height={36}
-              wrapperStyle={{ paddingBottom: '20px' }}
+              height={28}
+              wrapperStyle={{ paddingBottom: '10px', fontSize: '11px' }}
+              iconSize={10}
             />
 
             {/* Current curve */}
@@ -149,13 +183,13 @@ export const PowerCurve: React.FC<PowerCurveProps> = ({ state }) => {
             <ReferenceLine
               x={currentValue}
               stroke="#8b5cf6"
-              strokeWidth={2}
+              strokeWidth={1.5}
               strokeDasharray="3 3"
               label={{
                 value: `Current: ${currentValue}`,
                 position: 'top',
                 fill: '#8b5cf6',
-                fontSize: 11,
+                fontSize: 9,
               }}
             />
 
@@ -168,7 +202,7 @@ export const PowerCurve: React.FC<PowerCurveProps> = ({ state }) => {
                 value: '80% power',
                 position: 'right',
                 fill: '#f59e0b',
-                fontSize: 10,
+                fontSize: 9,
               }}
             />
             <ReferenceLine
@@ -179,7 +213,7 @@ export const PowerCurve: React.FC<PowerCurveProps> = ({ state }) => {
                 value: '90% power',
                 position: 'right',
                 fill: '#10b981',
-                fontSize: 10,
+                fontSize: 9,
               }}
             />
 
@@ -223,14 +257,14 @@ export const PowerCurve: React.FC<PowerCurveProps> = ({ state }) => {
             <>
               <li><strong>Shape of curve:</strong> Power increases rapidly at first, then levels off - there are diminishing returns to adding more samples</li>
               <li><strong>Minimum sample size:</strong> Find where the curve crosses 80% power to see the minimum n needed for adequate power</li>
-              <li><strong>Current position:</strong> You're at n={currentValue}, giving {((curveData.find((d) => Math.abs(d.x - currentValue) < 0.5)?.power || 0) * 100).toFixed(1)}% power</li>
-              <li><strong>To reach 80% power:</strong> {((curveData.find((d) => Math.abs(d.x - currentValue) < 0.5)?.power || 0)) >= 0.8 ? 'You already have adequate power!' : 'Increase your sample size to where the curve crosses the orange line'}</li>
+              <li><strong>Current position:</strong> You're at n={currentValue}, giving {(getPowerAtValue(currentValue) * 100).toFixed(1)}% power</li>
+              <li><strong>To reach 80% power:</strong> {getPowerAtValue(currentValue) >= 0.8 ? 'You already have adequate power!' : 'Increase your sample size to where the curve crosses the orange line'}</li>
             </>
           ) : (
             <>
               <li><strong>Shape of curve:</strong> Power increases with larger effects - it's easier to detect big differences than small ones</li>
               <li><strong>Detectable effect size:</strong> Find where the curve crosses 80% power to see the minimum δ you can reliably detect</li>
-              <li><strong>Current position:</strong> You're at δ={currentValue.toFixed(2)}, giving {((curveData.find((d) => Math.abs(d.x - currentValue) < 0.5)?.power || 0) * 100).toFixed(1)}% power</li>
+              <li><strong>Current position:</strong> You're at δ={currentValue.toFixed(2)}, giving {(getPowerAtValue(currentValue) * 100).toFixed(1)}% power</li>
               <li><strong>Small effects:</strong> Notice how power drops dramatically for small effect sizes - detecting subtle differences requires large samples</li>
             </>
           )}
@@ -244,13 +278,13 @@ export const PowerCurve: React.FC<PowerCurveProps> = ({ state }) => {
             Current Power at {variable} = {currentValue}:
           </span>
           <span className="text-2xl font-bold" style={{ color: COLORS.POWER }}>
-            {(curveData.find((d) => Math.abs(d.x - currentValue) < 0.5)?.power || 0).toFixed(3)}
+            {getPowerAtValue(currentValue).toFixed(3)}
           </span>
         </div>
         <p className="text-xs text-gray-600 mt-2">
           {variable === 'n'
-            ? `With n=${currentValue}, you have a ${((curveData.find((d) => Math.abs(d.x - currentValue) < 0.5)?.power || 0) * 100).toFixed(1)}% chance of detecting the effect if it exists.`
-            : `With δ=${currentValue.toFixed(2)}, you have a ${((curveData.find((d) => Math.abs(d.x - currentValue) < 0.5)?.power || 0) * 100).toFixed(1)}% chance of detecting the effect if it exists.`}
+            ? `With n=${currentValue}, you have a ${(getPowerAtValue(currentValue) * 100).toFixed(1)}% chance of detecting the effect if it exists.`
+            : `With δ=${currentValue.toFixed(2)}, you have a ${(getPowerAtValue(currentValue) * 100).toFixed(1)}% chance of detecting the effect if it exists.`}
         </p>
       </div>
 
