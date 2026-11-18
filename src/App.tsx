@@ -1,147 +1,139 @@
-import React, { useState } from 'react';
-import { BrowserRouter as Router, Routes, Route, Link, useLocation } from 'react-router-dom';
+import { lazy, Suspense, useEffect, useState } from 'react';
+import { BrowserRouter, NavLink, Route, Routes, useLocation } from 'react-router';
+import { ProgressProvider } from './lib/ProgressProvider';
 import { Home } from './pages/Home';
-import { Interactive } from './pages/Interactive';
-import { PValue } from './pages/PValue';
-import { Power } from './pages/Power';
-import { Scenarios } from './pages/Scenarios';
-import { Reference } from './pages/Reference';
 
-const Navigation: React.FC = () => {
-  const location = useLocation();
-  const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
+const Learn = lazy(() => import('./pages/Learn'));
+const LessonPage = lazy(() => import('./pages/LessonPage'));
+const Lab = lazy(() => import('./pages/Lab'));
+const Simulate = lazy(() => import('./pages/Simulate'));
+const Plan = lazy(() => import('./pages/Plan'));
+const Cases = lazy(() => import('./pages/Cases'));
+const Reference = lazy(() => import('./pages/Reference'));
+const Mastery = lazy(() => import('./pages/Mastery'));
+const NotFound = lazy(() => import('./pages/NotFound'));
 
-  const navItems = [
-    { path: '/', label: 'Home', icon: '🏠' },
-    { path: '/interactive', label: 'Interactive', icon: '🎛️' },
-    { path: '/pvalue', label: 'p-value', icon: '🔍' },
-    { path: '/power', label: 'Power', icon: '📈' },
-    { path: '/scenarios', label: 'Scenarios', icon: '🎯' },
-    { path: '/reference', label: 'Reference', icon: '📚' },
-  ];
+const NAV = [
+  { to: '/learn', label: 'Learn' },
+  { to: '/lab', label: 'Decision Lab' },
+  { to: '/simulate', label: 'Simulations' },
+  { to: '/plan', label: 'Sample size' },
+  { to: '/cases', label: 'Cases' },
+  { to: '/reference', label: 'Reference' },
+];
 
-  const toggleMobileMenu = () => {
-    setIsMobileMenuOpen(!isMobileMenuOpen);
-  };
+/** Scroll to top on navigation, or to #hash once the (lazy-loaded) target exists. */
+function ScrollManager() {
+  const { pathname, hash } = useLocation();
+  useEffect(() => {
+    if (!hash) {
+      window.scrollTo(0, 0);
+      return;
+    }
+    const id = decodeURIComponent(hash.slice(1));
+    let tries = 0;
+    let timer = 0;
+    const attempt = () => {
+      const el = document.getElementById(id);
+      if (el) el.scrollIntoView();
+      else if (tries++ < 40) timer = window.setTimeout(attempt, 50);
+    };
+    attempt();
+    return () => window.clearTimeout(timer);
+  }, [pathname, hash]);
+  return null;
+}
 
-  const closeMobileMenu = () => {
-    setIsMobileMenuOpen(false);
-  };
-
+function Header() {
+  const [open, setOpen] = useState(false);
+  const { pathname } = useLocation();
+  const [lastPath, setLastPath] = useState(pathname);
+  if (pathname !== lastPath) {
+    setLastPath(pathname);
+    setOpen(false);
+  }
+  const link = ({ isActive }: { isActive: boolean }) => `rounded-lg px-3 py-1.5 text-sm font-medium transition-colors ${isActive ? 'bg-slate-900 text-white' : 'text-slate-700 hover:bg-slate-200/70'}`;
   return (
-    <nav className="bg-white shadow-md sticky top-0 z-50">
-      <div className="max-w-7xl mx-auto px-2 sm:px-3 lg:px-4">
-        <div className="flex justify-between items-center h-10">
-          <Link to="/" className="flex items-center space-x-2">
-            <span className="text-2xl font-bold text-blue-600">ErrorLab</span>
-          </Link>
-
-          <div className="hidden md:flex space-x-1">
-            {navItems.map((item) => (
-              <Link
-                key={item.path}
-                to={item.path}
-                className={`px-2 py-1 rounded-md text-sm font-medium transition-colors ${
-                  location.pathname === item.path
-                    ? 'bg-blue-600 text-white'
-                    : 'text-gray-700 hover:bg-gray-100'
-                }`}
-              >
-                <span className="mr-1">{item.icon}</span>
-                {item.label}
-              </Link>
-            ))}
-          </div>
-
-          {/* Mobile menu button */}
-          <div className="md:hidden">
-            <button
-              type="button"
-              onClick={toggleMobileMenu}
-              className="text-gray-700 hover:text-gray-900 focus:outline-none focus:ring-2 focus:ring-blue-500"
-              aria-label="Toggle navigation menu"
-              aria-expanded={isMobileMenuOpen}
-            >
-              {isMobileMenuOpen ? (
-                <svg className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
-                </svg>
-              ) : (
-                <svg className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 6h16M4 12h16M4 18h16" />
-                </svg>
-              )}
-            </button>
-          </div>
-        </div>
+    <header className="sticky top-0 z-40 border-b border-slate-200 bg-white/90 backdrop-blur">
+      <a href="#main" className="sr-only focus:not-sr-only focus:absolute focus:left-2 focus:top-2 focus:rounded focus:bg-white focus:px-3 focus:py-2 focus:shadow">
+        Skip to content
+      </a>
+      <div className="mx-auto flex h-14 max-w-7xl items-center justify-between gap-4 px-4">
+        <NavLink to="/" className="flex items-center gap-2 font-semibold text-slate-900">
+          <img src="/favicon.svg" alt="" className="h-7 w-7" />
+          <span className="text-lg tracking-tight">ErrorLab</span>
+        </NavLink>
+        <nav aria-label="Main" className="hidden items-center gap-1 lg:flex">
+          {NAV.map((n) => (
+            <NavLink key={n.to} to={n.to} className={link}>
+              {n.label}
+            </NavLink>
+          ))}
+        </nav>
+        <button type="button" className="rounded-lg p-2 text-slate-700 hover:bg-slate-100 lg:hidden" aria-expanded={open} aria-controls="mobile-nav" aria-label={open ? 'Close menu' : 'Open menu'} onClick={() => setOpen((o) => !o)}>
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" aria-hidden>
+            {open ? <path d="M6 6l12 12M18 6L6 18" /> : <path d="M4 7h16M4 12h16M4 17h16" />}
+          </svg>
+        </button>
       </div>
-
-      {/* Mobile menu */}
-      {isMobileMenuOpen && (
-        <div className="md:hidden border-t border-gray-200">
-          <div className="px-2 pt-2 pb-3 space-y-1">
-            {navItems.map((item) => (
-              <Link
-                key={item.path}
-                to={item.path}
-                onClick={closeMobileMenu}
-                className={`block px-2 py-1 rounded-md text-base font-medium ${
-                  location.pathname === item.path
-                    ? 'bg-blue-600 text-white'
-                    : 'text-gray-700 hover:bg-gray-100'
-                }`}
-              >
-                <span className="mr-2">{item.icon}</span>
-                {item.label}
-              </Link>
+      {open && (
+        <nav id="mobile-nav" aria-label="Main" className="border-t border-slate-200 bg-white px-4 py-2 lg:hidden">
+          <div className="flex flex-col gap-1">
+            {NAV.map((n) => (
+              <NavLink key={n.to} to={n.to} className={link}>
+                {n.label}
+              </NavLink>
             ))}
           </div>
-        </div>
+        </nav>
       )}
-    </nav>
+    </header>
   );
-};
+}
 
-const Footer: React.FC = () => {
-  const currentYear = new Date().getFullYear();
-
+function Footer() {
   return (
-    <footer className="bg-gray-50 border-t border-gray-200 mt-2">
-      <div className="max-w-7xl mx-auto px-2 sm:px-3 lg:px-4 py-2">
-        <div className="text-center text-sm text-gray-600">
-          <p>
-            <strong>ErrorLab</strong> © {currentYear}
-          </p>
-          <p className="text-xs mt-1">
-            Made by Bashar Hasan, MD
-          </p>
-        </div>
+    <footer className="mt-16 border-t border-slate-200 bg-white">
+      <div className="mx-auto flex max-w-7xl flex-col gap-2 px-4 py-6 text-sm text-slate-600 sm:flex-row sm:items-center sm:justify-between">
+        <p>
+          <strong className="text-slate-800">ErrorLab</strong> · Made by Bashar Hasan, MD
+        </p>
+        <p className="text-xs text-slate-500">Exact calculations, checked against SciPy. Sources on the Reference page.</p>
       </div>
     </footer>
   );
-};
+}
 
-const App: React.FC = () => {
+function Loading() {
+  return <div className="mx-auto max-w-7xl px-4 py-16 text-center text-sm text-slate-500">Loading…</div>;
+}
+
+export default function App() {
   return (
-    <Router>
-      <div className="min-h-screen bg-gray-50 flex flex-col">
-        <Navigation />
-
-        <main className="flex-grow px-2 sm:px-3 lg:px-4 py-2">
-          <Routes>
-            <Route path="/" element={<Home />} />
-            <Route path="/interactive" element={<Interactive />} />
-            <Route path="/pvalue" element={<PValue />} />
-            <Route path="/power" element={<Power />} />
-            <Route path="/scenarios" element={<Scenarios />} />
-            <Route path="/reference" element={<Reference />} />
-          </Routes>
-        </main>
-
-        <Footer />
-      </div>
-    </Router>
+    <BrowserRouter>
+      <ProgressProvider>
+        <ScrollManager />
+        <div className="flex min-h-screen flex-col">
+          <Header />
+          <main id="main" className="flex-1">
+            <Suspense fallback={<Loading />}>
+              <Routes>
+                <Route path="/" element={<Home />} />
+                <Route path="/learn" element={<Learn />} />
+                <Route path="/learn/:lessonId" element={<LessonPage />} />
+                <Route path="/mastery" element={<Mastery />} />
+                <Route path="/lab" element={<Lab />} />
+                <Route path="/simulate" element={<Simulate />} />
+                <Route path="/plan" element={<Plan />} />
+                <Route path="/cases" element={<Cases />} />
+                <Route path="/reference" element={<Reference />} />
+                <Route path="*" element={<NotFound />} />
+              </Routes>
+            </Suspense>
+          </main>
+          <Footer />
+        </div>
+      </ProgressProvider>
+    </BrowserRouter>
   );
-};
-
-export default App;
+}
