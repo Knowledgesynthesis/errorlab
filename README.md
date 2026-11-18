@@ -1,211 +1,97 @@
-# ErrorLab: Interactive Stats Playground
+# ErrorLab
 
-An educational web application for learning statistical hypothesis testing concepts through interactive visualizations and hands-on exploration.
+Learn hypothesis testing by running the experiments yourself: Type I and Type II errors, power, p-values, false positive risk, exaggerated effects, peeking, multiple testing, equivalence tests and sample-size planning. Every number is computed exactly and every claim links to its source.
 
-## Overview
+## What's inside
 
-ErrorLab is designed to make statistical hypothesis testing intuitive and accessible. It provides interactive tools to explore:
+| Section | What it does |
+| --- | --- |
+| **Learn** | Nine lessons (~90 min total). Each has a live simulation, "predict, then reveal" tasks and end-of-lesson checks with feedback on every option. Progress is saved in the browser. |
+| **Mastery test** | 15 applied questions across all lessons, in mixed order; 80% counts as mastery. |
+| **Decision Lab** | Every lever of a test (design, z/t, sidedness, α, n, δ, σ, prior) in one place: H₀/H₁ distributions with α, β and power shaded, a draggable critical value, the 2×2 table in natural frequencies, false positive risk, Type S/M errors, A/B comparison and shareable URLs. |
+| **Simulations** | One study, the p-value distribution, the dance of p-values, exaggeration, optional stopping, and Bonferroni / Holm / Benjamini–Hochberg. |
+| **Sample-size planner** | Exact n for a target power, attrition, minimum detectable effect, power curves (vs n or d) and a copy-ready justification sentence. |
+| **Cases** | A blood-pressure RCT, an A/B test, a Shewhart control chart and a bioequivalence (TOST) study, each with design rationale and sources. |
+| **Reference** | Searchable glossary, formulas with live worked examples, 16 misconceptions, checklists, and 46 sources with DOIs or links. |
 
-- **Type I and Type II errors** (α and β)
-- **Statistical power** (1 - β)
-- **p-values** and their proper interpretation
-- **The 2×2 decision table** for hypothesis testing
-- **Real-world scenarios** (medical testing, A/B tests, quality control)
+### The lessons
 
-## Features
+1. Two truths, two decisions: the 2×2 table
+2. Signal, noise and the standard error: z vs t
+3. α and the rejection region: choosing and justifying α
+4. Power and β: the four levers
+5. What a p-value is — and isn't: S-values, Bayes factor bound, ASA principles
+6. Significant is not the same as true: false positive risk
+7. Underpowered studies exaggerate: Type M and Type S errors
+8. Peeking and multiple tests: optional stopping, FWER, FDR
+9. Design and report a study: SESOI, sample size, observed-power fallacy, TOST, reporting
 
-### 1. Interactive Dashboard
-- Adjust parameters with sliders (α, sample size, effect size, variance)
-- See distributions and decision regions update in real-time
-- Visualize the 2×2 confusion matrix with animated counts
-- Switch between z-test and t-test
-- Choose one-sided or two-sided tests
+## Correctness
 
-### 2. p-value Explorer
-- Generate random samples from H₀ or H₁
-- See test statistics plotted on the null distribution
-- Understand what p-values really mean (and what they don't)
-- Visualize the tail area corresponding to the p-value
+The statistics engine (`src/stats`) is tested against SciPy reference values (`npm test`):
 
-### 3. Power Analysis
-- Plot power curves vs. sample size or effect size
-- Save and compare multiple scenarios
-- See how α, n, δ, and σ affect power
-- Learn optimal study design principles
+- Normal CDF/quantile accurate to better than 1e-12 relative (typically ~1e-15), including far tails; noncentral t to ~1e-8.
+- Student t CDF and quantile for any df (no large-df normal shortcut).
+- **Power for t tests uses the noncentral t distribution**, not a shifted central t.
+- Sample sizes reproduce standard tables (e.g. d = 0.5, 80% power, α = .05 → 64 per group).
+- Simulations draw studies exactly from their sufficient statistics and are tested against theory (rejection rate = α under H₀, = power under H₁; uniform p-values; Armitage's ≈14% error rate for five looks).
+- Type S/M errors reproduce Gelman & Carlin (2014); the false positive risk reproduces Colquhoun's (2014) 36% example.
 
-### 4. Real-World Scenarios
-- Medical screening (disease testing)
-- A/B testing (product experiments)
-- Quality control (manufacturing)
-- Contextual explanations of Type I and Type II errors
-- Interactive quizzes to test understanding
+Content tests check that every citation resolves to a listed source, every multiple-choice question has exactly one correct answer with feedback for each option, and numeric answers agree with the engine. Every page and lesson is render-tested. The UI passes axe-core WCAG 2.2 AA checks.
 
-### 5. Reference & Glossary
-- Comprehensive definitions of key terms
-- Common misconceptions explained
-- Key formulas and decision guidelines
-- Accessibility features throughout
+## Teaching approach
 
-## Educational Approach
+- **Predict, then reveal** before each demonstration (Crouch et al. 2004).
+- **Retrieval practice** at the end of every lesson (Roediger & Karpicke 2006; Dunlosky et al. 2013).
+- **Interleaved** mastery test (Rohrer & Taylor 2007).
+- **Natural frequencies** for conditional probabilities (Gigerenzer & Hoffrage 1995).
+- **Simulation-based inference** (GAISE 2016).
+- Colour-blind-safe palette (Okabe–Ito); every control is keyboard-operable.
 
-### Progressive Disclosure
-The app starts simple and gradually introduces complexity:
-1. Start with α and the rejection region
-2. Add H₁ distribution overlay
-3. Introduce β and power
-4. Explore p-values and their interpretation
+## Run it
 
-### Concrete Metaphors
-Abstract concepts are grounded in real scenarios:
-- **Medical screening**: false alarms vs. missed diagnoses
-- **A/B testing**: shipping bad features vs. missing good ones
-- **Quality control**: unnecessary stoppages vs. shipping defects
-
-### Common Misconceptions Addressed
-- p-value ≠ probability that H₀ is true
-- Failing to reject ≠ accepting H₀
-- Smaller α is not always better
-- Power ≠ 1 - α
-- Statistical significance ≠ practical importance
-
-## Technology Stack
-
-- **Framework**: React 18 + TypeScript
-- **Build Tool**: Vite
-- **Styling**: Tailwind CSS
-- **Charts**: Recharts
-- **Animation**: Framer Motion
-- **Routing**: React Router
-
-## Getting Started
-
-### Prerequisites
-- Node.js 16+ and npm
-
-### Installation
+Requires Node.js 22.12+.
 
 ```bash
-# Install dependencies
 npm install
-
-# Start development server
-npm run dev
-
-# Build for production
-npm run build
-
-# Preview production build
-npm run preview
+npm run dev        # http://localhost:5173
+npm test           # stats, content and render tests
+npm run lint
+npm run build      # type-check + production build in dist/
+npm run check      # lint + test + build
 ```
 
-### Development
+Deploys as a static single-page app; `vercel.json` rewrites all routes to `index.html`.
 
-The app will be available at `http://localhost:5173`
-
-## Project Structure
+## Project structure
 
 ```
-errorlab/
-├── src/
-│   ├── components/       # Reusable UI components
-│   │   ├── ControlPanel.tsx
-│   │   ├── DistributionPlot.tsx
-│   │   ├── TwoByTwoCard.tsx
-│   │   ├── PValueExplorer.tsx
-│   │   ├── PowerCurve.tsx
-│   │   ├── ScenarioSwitcher.tsx
-│   │   ├── Quiz.tsx
-│   │   └── GlossaryCard.tsx
-│   ├── pages/            # Page components
-│   │   ├── Home.tsx
-│   │   ├── Interactive.tsx
-│   │   ├── PValue.tsx
-│   │   ├── Power.tsx
-│   │   ├── Scenarios.tsx
-│   │   └── Reference.tsx
-│   ├── utils/            # Statistical calculations and helpers
-│   │   ├── statistics.ts
-│   │   ├── scenarios.ts
-│   │   └── constants.ts
-│   ├── types/            # TypeScript type definitions
-│   │   └── index.ts
-│   ├── App.tsx           # Main app component with routing
-│   ├── main.tsx          # App entry point
-│   └── index.css         # Global styles
-├── public/               # Static assets
-├── index.html            # HTML template
-├── package.json          # Dependencies and scripts
-├── tsconfig.json         # TypeScript configuration
-├── tailwind.config.js    # Tailwind CSS configuration
-└── vite.config.ts        # Vite configuration
+src/
+├── stats/          # distributions, design/power, simulation, multiplicity, TOST (+ tests)
+├── content/        # lessons metadata, questions, cases, glossary, misconceptions, references (+ tests)
+├── lessons/        # lesson bodies (part1–3) and registry
+├── components/
+│   ├── charts/     # SVG charts: distributions, lines, histograms, icon arrays, CI stacks…
+│   ├── widgets/    # interactive explorers and simulations used by lessons and pages
+│   └── ui/         # controls, layout, quiz, predict-reveal, citations
+├── pages/          # Home, Learn, LessonPage, Mastery, Lab, Simulate, Plan, Cases, Reference
+└── lib/            # formatting, colours, progress storage
 ```
 
-## Key Concepts Explained
+Stack: React 19, React Router 7, TypeScript 6, Vite 8, Tailwind CSS 4, Vitest. Charts are hand-written SVG (no chart library).
 
-### Type I Error (α)
-The probability of rejecting H₀ when it is actually true (false positive). This is the significance level you set before the test.
+## Scope
 
-### Type II Error (β)
-The probability of failing to reject H₀ when H₁ is true (false negative). This depends on α, sample size, effect size, and variance.
-
-### Statistical Power (1 - β)
-The probability of correctly rejecting H₀ when H₁ is true. Higher power means better ability to detect true effects.
-
-### p-value
-The probability, assuming H₀ is true, of observing data at least as extreme as what was observed. It is NOT the probability that H₀ is true.
-
-### The Tradeoff
-- Decreasing α reduces Type I errors but increases Type II errors (reduces power)
-- Increasing sample size reduces Type II errors (increases power) without affecting α
-- Larger effect sizes are easier to detect (higher power)
-
-## Statistical Implementation
-
-### Distributions
-- Standard normal distribution (z-test)
-- Student's t-distribution (t-test)
-- Numerical approximations for CDF and quantile functions
-
-### Power Calculation
-Power is computed by:
-1. Finding the critical value(s) based on α
-2. Computing the non-centrality parameter: δ / SE
-3. Calculating the probability under H₁ of falling in the rejection region
-
-### Sample Generation
-Uses a seeded pseudo-random number generator (Linear Congruential Generator) with Box-Muller transform for reproducible normal samples.
-
-## Accessibility
-
-- WCAG 2.2 AA compliant
-- Keyboard-navigable controls
-- ARIA labels on interactive elements
-- Sufficient color contrast
-- Live region updates for screen readers
-- Responsive mobile-first design
-
-## Browser Support
-
-- Chrome/Edge (latest)
-- Firefox (latest)
-- Safari (latest)
-
-## License
-
-This is an educational project. Feel free to use and modify for learning purposes.
-
-## Acknowledgments
-
-Built following principles from:
-- Statistical pedagogy research
-- WCAG accessibility guidelines
-- React best practices
-- Plain language communication
+ErrorLab models tests of one mean (or paired differences) and of two independent means with equal group sizes and a common σ. For real two-group analyses use Welch's t test, and for other designs (proportions with small n, unequal groups, clustering, survival) use dedicated software.
 
 ## Contributing
 
-This is an educational tool. Suggestions for improvements to pedagogy, accessibility, or statistical accuracy are welcome.
+Corrections to the statistics, sources or teaching are welcome. Please add a test for any change to `src/stats` or to a numeric claim.
+
+## License
+
+Free to use and modify for learning and teaching.
 
 ---
 
-**Learn by doing. Understand through visualization. Master hypothesis testing with ErrorLab.**
+Made by Bashar Hasan, MD.
